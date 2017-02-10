@@ -7,7 +7,7 @@ use PhpEmail\Content;
 /**
  * The standard content of an email, as we have always used it. All that is required is some HTML or a text string.
  */
-class SimpleContent implements Content
+class SimpleContent implements Content\Contracts\SimpleContent
 {
     /**
      * @var string|null
