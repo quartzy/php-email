@@ -2,6 +2,8 @@
 
 namespace PhpEmail\Content\Contracts;
 
+use PhpEmail\Content;
+
 /**
  * Email templates allow rendering of content to be handled by third-party service providers such as Postmark,
  * Sparkpost and SendGrid. How an application stores the available third-party templates is up to the developer,
@@ -9,7 +11,7 @@ namespace PhpEmail\Content\Contracts;
  * template must have an identifier provided by the third party service as well as an associative array of substitution
  * data to fill in the template.
  */
-interface TemplatedContent
+interface TemplatedContent extends Content
 {
     /**
      * @return string

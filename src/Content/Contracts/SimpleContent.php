@@ -2,7 +2,9 @@
 
 namespace PhpEmail\Content\Contracts;
 
-interface SimpleContent
+use PhpEmail\Content;
+
+interface SimpleContent extends Content
 {
     /**
      * @return string|null
