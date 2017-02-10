@@ -1,6 +1,6 @@
 <?php
 
-namespace Postcard\Content;
+namespace PhpEmail\Content;
 
 /**
  * Email templates allow rendering of content to be handled by third-party service providers such as Postmark,
@@ -14,4 +14,9 @@ interface TemplatedContent
      * @return string
      */
     public function getTemplateId();
+
+    /**
+     * @return array|string[]
+     */
+    public function getTemplateData();
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Postcard;
+namespace PhpEmail;
 
 use Assert\Assert;
 use Assert\Assertion;
@@ -15,12 +15,12 @@ class Email
     /**
      * @var array|Recipient[]
      */
-    private $ccRecipients;
+    private $ccRecipients = [];
 
     /**
      * @var array|Recipient[]
      */
-    private $bccRecipients;
+    private $bccRecipients = [];
 
     /**
      * @var Sender
@@ -30,7 +30,12 @@ class Email
     /**
      * @var array|Sender[]
      */
-    private $replyTos;
+    private $replyTos = [];
+
+    /**
+     * @var string|null
+     */
+    private $subject = null;
 
     /**
      * @var Content
@@ -40,7 +45,7 @@ class Email
     /**
      * @var array|string[]
      */
-    private $attachments;
+    private $attachments = [];
 
     /**
      * @param Content $content
@@ -207,6 +212,26 @@ class Email
     public function addReplyTos(Sender ...$replyTos)
     {
         $this->replyTos = array_values(array_unique(array_merge($this->replyTos, $replyTos)));
+
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getSubject()
+    {
+        return $this->subject;
+    }
+
+    /**
+     * @param string|null $subject
+     *
+     * @return Email
+     */
+    public function setSubject($subject)
+    {
+        $this->subject = $subject;
 
         return $this;
     }

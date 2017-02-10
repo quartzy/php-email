@@ -1,8 +1,8 @@
 <?php
 
-namespace Postcard\Test;
+namespace PhpEmail\Test;
 
-use Postcard\Recipient;
+use PhpEmail\Recipient;
 
 class RecipientTest extends TestCase
 {

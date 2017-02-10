@@ -20,12 +20,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Postcard\\": "src/"
+            "PhpEmail\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Postcard\\Test\\": "tests/"
+            "PhpEmail\\Test\\": "tests/"
         }
     }
 }

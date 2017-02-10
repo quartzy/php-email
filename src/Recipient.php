@@ -1,6 +1,6 @@
 <?php
 
-namespace Postcard;
+namespace PhpEmail;
 
 use Assert\Assert;
 

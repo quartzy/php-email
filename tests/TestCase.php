@@ -1,6 +1,6 @@
 <?php
 
-namespace Postcard\Test;
+namespace PhpEmail\Test;
 
 class TestCase extends \PHPUnit\Framework\TestCase
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace Postcard\Content;
+namespace PhpEmail\Content;
 
-use Postcard\Content;
+use PhpEmail\Content;
 
 class EmptyContent implements Content
 {

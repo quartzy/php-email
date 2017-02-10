@@ -1,6 +1,6 @@
 <?php
 
-namespace Postcard;
+namespace PhpEmail;
 
 /**
  * A blank interface to defining a hierarchy of email content. In a world with a multitude of third-party services for

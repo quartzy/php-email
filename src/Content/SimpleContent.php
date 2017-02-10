@@ -1,8 +1,8 @@
 <?php
 
-namespace Postcard\Content;
+namespace PhpEmail\Content;
 
-use Postcard\Content;
+use PhpEmail\Content;
 
 /**
  * The standard content of an email, as we have always used it. All that is required is some HTML or a text string.
