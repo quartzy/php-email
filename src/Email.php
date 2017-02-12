@@ -33,9 +33,9 @@ class Email
     private $replyTos = [];
 
     /**
-     * @var string|null
+     * @var string
      */
-    private $subject = null;
+    private $subject;
 
     /**
      * @var Content
@@ -51,21 +51,23 @@ class Email
      * @param Content $content
      * @param Sender  $from
      * @param array   $toRecipients
-     *
-     * @throws \Assert\LazyAssertionException
+     * @param string  $subject
      */
     public function __construct(
+        $subject,
         Content $content,
         Sender $from,
         array $toRecipients
     ) {
         Assert::lazy()
             ->that($toRecipients, 'toRecipients')->all()->isInstanceOf(Recipient::class)
+            ->that($subject, 'subject')->string()->minLength(1)
             ->verifyNow();
 
         $this->content       = $content;
         $this->from          = $from;
         $this->toRecipients  = $toRecipients;
+        $this->subject       = $subject;
     }
 
     /**
@@ -217,7 +219,7 @@ class Email
     }
 
     /**
-     * @return string|null
+     * @return string
      */
     public function getSubject()
     {
@@ -225,12 +227,18 @@ class Email
     }
 
     /**
-     * @param string|null $subject
+     * @param string $subject
      *
      * @return Email
      */
     public function setSubject($subject)
     {
+        Assert::lazy()
+            ->that($subject, 'subject')
+            ->string()
+            ->minLength(1)
+            ->verifyNow();
+
         $this->subject = $subject;
 
         return $this;
