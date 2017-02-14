@@ -2,7 +2,7 @@
 
 namespace PhpEmail;
 
-use Assert\Assert;
+use Assert\LazyAssertion;
 use Assert\Assertion;
 
 class Email
@@ -59,7 +59,7 @@ class Email
         Sender $from,
         array $toRecipients
     ) {
-        Assert::lazy()
+        (new LazyAssertion())
             ->that($toRecipients, 'toRecipients')->all()->isInstanceOf(Recipient::class)
             ->that($subject, 'subject')->string()->minLength(1)
             ->verifyNow();
@@ -233,7 +233,7 @@ class Email
      */
     public function setSubject($subject)
     {
-        Assert::lazy()
+        (new LazyAssertion())
             ->that($subject, 'subject')
             ->string()
             ->minLength(1)
@@ -277,11 +277,13 @@ class Email
      *
      * @return $this
      *
-     * @throws \Assert\AssertionFailedException
+     * @throws \Assert\LazyAssertionException
      */
     public function setAttachments(...$attachments)
     {
-        Assertion::allFile($attachments);
+        (new LazyAssertion())
+            ->that($attachments, 'attacments')->all()->file()
+            ->verifyNow();
 
         $this->attachments = $attachments;
 
@@ -293,11 +295,13 @@ class Email
      *
      * @return $this
      *
-     * @throws \Assert\AssertionFailedException
+     * @throws \Assert\LazyAssertionException
      */
     public function addAttachments(...$attachments)
     {
-        Assertion::allFile($attachments);
+        (new LazyAssertion())
+            ->that($attachments, 'attacments')->all()->file()
+            ->verifyNow();
 
         $this->attachments = array_values(array_unique(array_merge($this->attachments, $attachments)));
 

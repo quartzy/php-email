@@ -2,7 +2,7 @@
 
 namespace PhpEmail;
 
-use Assert\Assert;
+use Assert\LazyAssertion;
 
 class Sender
 {
@@ -24,7 +24,7 @@ class Sender
      */
     public function __construct($email, $name = null)
     {
-        Assert::lazy()
+        (new LazyAssertion())
             ->that($email, 'email')->email()
             ->that($name, 'name')->nullOr()->string()
             ->verifyNow();

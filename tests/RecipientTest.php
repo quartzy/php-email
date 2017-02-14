@@ -45,7 +45,7 @@ class RecipientTest extends TestCase
     /**
      * @testdox It should validate that the email is acceptable
      * @dataProvider emails
-     * @expectedException \Assert\AssertionFailedException
+     * @expectedException \Assert\LazyAssertionException
      */
     public function validatesEmail($email)
     {
