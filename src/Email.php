@@ -3,32 +3,31 @@
 namespace PhpEmail;
 
 use Assert\LazyAssertion;
-use Assert\Assertion;
 
 class Email
 {
     /**
-     * @var array|Recipient[]
+     * @var array|Address[]
      */
     private $toRecipients;
 
     /**
-     * @var array|Recipient[]
+     * @var array|Address[]
      */
     private $ccRecipients = [];
 
     /**
-     * @var array|Recipient[]
+     * @var array|Address[]
      */
     private $bccRecipients = [];
 
     /**
-     * @var Sender
+     * @var Address
      */
     private $from;
 
     /**
-     * @var array|Sender[]
+     * @var array|Address[]
      */
     private $replyTos = [];
 
@@ -49,18 +48,18 @@ class Email
 
     /**
      * @param Content $content
-     * @param Sender  $from
+     * @param Address $from
      * @param array   $toRecipients
      * @param string  $subject
      */
     public function __construct(
         $subject,
         Content $content,
-        Sender $from,
+        Address $from,
         array $toRecipients
     ) {
         (new LazyAssertion())
-            ->that($toRecipients, 'toRecipients')->all()->isInstanceOf(Recipient::class)
+            ->that($toRecipients, 'toRecipients')->all()->isInstanceOf(Address::class)
             ->that($subject, 'subject')->string()->minLength(1)
             ->verifyNow();
 
@@ -71,7 +70,7 @@ class Email
     }
 
     /**
-     * @return array|Recipient[]
+     * @return array|Address[]
      */
     public function getToRecipients()
     {
@@ -79,11 +78,11 @@ class Email
     }
 
     /**
-     * @param array|Recipient[] $toRecipients
+     * @param array|Address[] $toRecipients
      *
      * @return Email
      */
-    public function setToRecipients(Recipient ...$toRecipients)
+    public function setToRecipients(Address ...$toRecipients)
     {
         $this->toRecipients = $toRecipients;
 
@@ -91,11 +90,11 @@ class Email
     }
 
     /**
-     * @param array|Recipient[] ...$toRecipients
+     * @param array|Address[] ...$toRecipients
      *
      * @return $this
      */
-    public function addToRecipients(Recipient ...$toRecipients)
+    public function addToRecipients(Address ...$toRecipients)
     {
         $this->toRecipients = array_values(array_unique(array_merge($this->toRecipients, $toRecipients)));
 
@@ -103,7 +102,7 @@ class Email
     }
 
     /**
-     * @return array|Recipient[]
+     * @return array|Address[]
      */
     public function getCcRecipients()
     {
@@ -111,11 +110,11 @@ class Email
     }
 
     /**
-     * @param array|Recipient[] ...$ccRecipients
+     * @param array|Address[] ...$ccRecipients
      *
      * @return $this
      */
-    public function setCcRecipients(Recipient ...$ccRecipients)
+    public function setCcRecipients(Address ...$ccRecipients)
     {
         $this->ccRecipients = $ccRecipients;
 
@@ -123,11 +122,11 @@ class Email
     }
 
     /**
-     * @param array|Recipient[] ...$ccRecipients
+     * @param array|Address[] ...$ccRecipients
      *
      * @return $this
      */
-    public function addCcRecipients(Recipient ...$ccRecipients)
+    public function addCcRecipients(Address ...$ccRecipients)
     {
         $this->ccRecipients = array_values(array_unique(array_merge($this->ccRecipients, $ccRecipients)));
 
@@ -135,7 +134,7 @@ class Email
     }
 
     /**
-     * @return array|Recipient[]
+     * @return array|Address[]
      */
     public function getBccRecipients()
     {
@@ -143,11 +142,11 @@ class Email
     }
 
     /**
-     * @param array|Recipient[] ...$bccRecipients
+     * @param array|Address[] ...$bccRecipients
      *
      * @return $this
      */
-    public function setBccRecipients(Recipient ...$bccRecipients)
+    public function setBccRecipients(Address ...$bccRecipients)
     {
         $this->bccRecipients = $bccRecipients;
 
@@ -155,11 +154,11 @@ class Email
     }
 
     /**
-     * @param array|Recipient[] ...$bccRecipients
+     * @param array|Address[] ...$bccRecipients
      *
      * @return $this
      */
-    public function addBccRecipients(Recipient ...$bccRecipients)
+    public function addBccRecipients(Address ...$bccRecipients)
     {
         $this->bccRecipients = array_values(array_unique(array_merge($this->bccRecipients, $bccRecipients)));
 
@@ -167,7 +166,7 @@ class Email
     }
 
     /**
-     * @return Sender
+     * @return Address
      */
     public function getFrom()
     {
@@ -175,11 +174,11 @@ class Email
     }
 
     /**
-     * @param Sender $from
+     * @param Address $from
      *
      * @return Email
      */
-    public function setFrom(Sender $from)
+    public function setFrom(Address $from)
     {
         $this->from = $from;
 
@@ -187,7 +186,7 @@ class Email
     }
 
     /**
-     * @return array|Sender[]
+     * @return array|Address[]
      */
     public function getReplyTos()
     {
@@ -195,11 +194,11 @@ class Email
     }
 
     /**
-     * @param array|Sender[] $replyTos
+     * @param array|Address[] $replyTos
      *
      * @return Email
      */
-    public function setReplyTos(Sender ...$replyTos)
+    public function setReplyTos(Address ...$replyTos)
     {
         $this->replyTos = $replyTos;
 
@@ -207,11 +206,11 @@ class Email
     }
 
     /**
-     * @param array|Sender[] ...$replyTos
+     * @param array|Address[] ...$replyTos
      *
      * @return $this
      */
-    public function addReplyTos(Sender ...$replyTos)
+    public function addReplyTos(Address ...$replyTos)
     {
         $this->replyTos = array_values(array_unique(array_merge($this->replyTos, $replyTos)));
 

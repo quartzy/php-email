@@ -2,9 +2,9 @@
 
 namespace PhpEmail\Test;
 
-use PhpEmail\Recipient;
+use PhpEmail\Address;
 
-class RecipientTest extends TestCase
+class AddressTest extends TestCase
 {
     public function recipients()
     {
@@ -25,7 +25,7 @@ class RecipientTest extends TestCase
      */
     public function hasToString($email, $name)
     {
-        $recipient = new Recipient($email, $name);
+        $recipient = new Address($email, $name);
 
         $expectedEmail  = "\"$email\"";
         $expectedName   = $name ? "\"$name\"" : 'null';
@@ -34,7 +34,7 @@ class RecipientTest extends TestCase
         self::assertEquals($expectedString, $recipient->__toString());
     }
 
-    public function emails()
+    public function addresses()
     {
         return [
             ['test@test'],
@@ -44,11 +44,11 @@ class RecipientTest extends TestCase
 
     /**
      * @testdox It should validate that the email is acceptable
-     * @dataProvider emails
+     * @dataProvider addresses
      * @expectedException \Assert\LazyAssertionException
      */
     public function validatesEmail($email)
     {
-        new Recipient($email);
+        new Address($email);
     }
 }

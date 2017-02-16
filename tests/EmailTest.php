@@ -2,9 +2,9 @@
 
 namespace PhpEmail\Test;
 
+use PhpEmail\Address;
 use PhpEmail\Content\SimpleContent;
 use PhpEmail\Email;
-use PhpEmail\Sender;
 
 /**
  * @covers \PhpEmail\Email
@@ -17,6 +17,6 @@ class EmailTest extends TestCase
      */
     public function validatesOnConstruction()
     {
-        new Email('', SimpleContent::text('hello'), new Sender('sender@test.com'), ['hello']);
+        new Email('', SimpleContent::text('hello'), new Address('sender@test.com'), ['hello']);
     }
 }

@@ -4,7 +4,7 @@ namespace PhpEmail;
 
 use Assert\LazyAssertion;
 
-class Recipient
+class Address
 {
     /**
      * @var string
