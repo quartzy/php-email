@@ -281,7 +281,7 @@ class Email
     public function setAttachments(...$attachments)
     {
         (new LazyAssertion())
-            ->that($attachments, 'attacments')->all()->file()
+            ->that($attachments, 'attachments')->all()->file()
             ->verifyNow();
 
         $this->attachments = $attachments;
