@@ -2,8 +2,6 @@
 
 namespace PhpEmail;
 
-use Assert\LazyAssertion;
-
 class Email
 {
     /**
@@ -51,6 +49,8 @@ class Email
      * @param Address $from
      * @param array   $toRecipients
      * @param string  $subject
+     *
+     * @throws ValidationException
      */
     public function __construct(
         $subject,
@@ -58,15 +58,17 @@ class Email
         Address $from,
         array $toRecipients
     ) {
-        (new LazyAssertion())
-            ->that($toRecipients, 'toRecipients')->all()->isInstanceOf(Address::class)
-            ->that($subject, 'subject')->string()->minLength(1)
-            ->verifyNow();
+        Validate::that()
+            ->allInstanceOf('toRecipients', $toRecipients, Address::class)
+            ->isString('subject', $subject)
+            ->hasMinLength('subject', $subject, 1)
+            ->now();
 
         $this->content       = $content;
         $this->from          = $from;
-        $this->toRecipients  = $toRecipients;
         $this->subject       = $subject;
+
+        $this->setToRecipients(...$toRecipients);
     }
 
     /**
@@ -229,14 +231,15 @@ class Email
      * @param string $subject
      *
      * @return Email
+     *
+     * @throws ValidationException
      */
     public function setSubject($subject)
     {
-        (new LazyAssertion())
-            ->that($subject, 'subject')
-            ->string()
-            ->minLength(1)
-            ->verifyNow();
+        Validate::that()
+            ->isString('subject', $subject)
+            ->hasMinLength('subject', $subject, 1)
+            ->now();
 
         $this->subject = $subject;
 
@@ -264,7 +267,7 @@ class Email
     }
 
     /**
-     * @return array|string[]
+     * @return array|Attachment[]
      */
     public function getAttachments()
     {
@@ -272,36 +275,28 @@ class Email
     }
 
     /**
-     * @param array ...$attachments
+     * @param Attachment[] ...$attachments
      *
      * @return $this
      *
-     * @throws \Assert\LazyAssertionException
+     * @throws ValidationException
      */
-    public function setAttachments(...$attachments)
+    public function setAttachments(Attachment ...$attachments)
     {
-        (new LazyAssertion())
-            ->that($attachments, 'attachments')->all()->file()
-            ->verifyNow();
-
         $this->attachments = $attachments;
 
         return $this;
     }
 
     /**
-     * @param array|string[] $attachments
+     * @param Attachment[] $attachments
      *
      * @return $this
      *
-     * @throws \Assert\LazyAssertionException
+     * @throws ValidationException
      */
-    public function addAttachments(...$attachments)
+    public function addAttachments(Attachment ...$attachments)
     {
-        (new LazyAssertion())
-            ->that($attachments, 'attacments')->all()->file()
-            ->verifyNow();
-
         $this->attachments = array_values(array_unique(array_merge($this->attachments, $attachments)));
 
         return $this;

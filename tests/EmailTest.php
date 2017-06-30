@@ -13,7 +13,7 @@ class EmailTest extends TestCase
 {
     /**
      * @testdox It should validate on construction
-     * @expectedException \Assert\LazyAssertionException
+     * @expectedException \PhpEmail\ValidationException
      */
     public function validatesOnConstruction()
     {

@@ -20,7 +20,7 @@ class TemplatedContent implements Content\Contracts\TemplatedContent
      * @param string $templateId
      * @param array  $templateData
      */
-    public function __construct($templateId, $templateData)
+    public function __construct($templateId, array $templateData)
     {
         $this->templateId   = $templateId;
         $this->templateData = $templateData;
