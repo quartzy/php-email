@@ -30,7 +30,7 @@ references:
 
 jobs:
   checkout_code:
-    working_directory: /root/php-email
+    working_directory: /home/circleci
     docker:
       - image: notnoopci/php:5.6
     steps:
@@ -45,7 +45,7 @@ jobs:
           paths:
             - php-email
   php56:
-    working_directory: /root/php-email
+    working_directory: /home/circleci
     docker:
       - image: notnoopci/php:5.6
     steps:
@@ -54,7 +54,7 @@ jobs:
       - *composer
       - *run_tests
   php70:
-    working_directory: /root/php-email
+    working_directory: /home/circleci
     docker:
       - image: notnoopci/php:7.0
     steps:
@@ -63,7 +63,7 @@ jobs:
       - *composer
       - *run_tests
   php71:
-    working_directory: /root/php-email
+    working_directory: /home/circleci
     docker:
       - image: notnoopci/php:7.1
     steps:
