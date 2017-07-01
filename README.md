@@ -4,57 +4,38 @@ This is a domain-driven library for defining emails in PHP.
 
 Php Email brings three major benefits over other similar libraries: 
 
-1. Focusing on new versions of PHP. By using the latest versions of PHP we can leverage great features such as splat parameters and better type hinting.
+1. Focusing on new versions of PHP. By using the newer versions of PHP (5.6+) we can leverage great features such as splat parameters and better type hinting.
 1. Focusing on only the email, instead of transmission. In a domain-driven world, emails can and should exist separately from the delivery mechanism. By separating these concerns, this library decreases the size and complexity of the domain, while giving developers greater flexibility in how they use the library. 
 1. Flexible content definitions. Emails have gone from a simple text string to highly stylized HTML to now just being templates stored in third-party services. Existing libraries do not provide enough flexibility to support everything developers need. Php Email attempts to correct this by creating guidelines for possible email content, but also allowing developers to define what they need.
   
+## Install
+
+### With Composer
+
+```bash
+composer require quartzy/php-email
+```
   
-## Examples
+## Usage
  
-Sending a standard content email: 
+Building an email with HTML and text content would look like:
 
 ```php
 <?php
 
-// Create a basic email
-$from       = new PhpEmail\Address('from@test.com');
-$recipients = [
-    new PhpEmail\Address('user@test.com'), 
-    new PhpEmail\Address('named@test.com', 'Named User'),
-];
-$subject    = 'Domain Driven Emails';
-$content    = new PhpEmail\Content\SimpleContent('<b>Html emails!</b>', 'Text emails!');
+use PhpEmail\EmailBuilder;
+use PhpEmail\Content\SimpleContent;
 
-$email = new PhpEmail\Email($subject, $content, $from, $recipients);
-
-// Add CC and BCC recipients
-$ccs = [
-    new PhpEmail\Address('cc@test.com'),
-];
-
-$email->addCcRecipients(...$ccs);
-
-$bccs = [
-    new PhpEmail\Address('bcc@test.com'),
-];
-
-$email->addBccRecipients(...$bccs);
-
-// Add Reply-To addresses
-$replyTos = [
-    new PhpEmail\Address('firstReply@test.com'),
-    new PhpEmail\Address('secondReply@test.com'),
-];
-
-$email->addReplyTos(...$replyTos);
-
-// Add attachments
-$attachments = [
-    '/path/to/my/file.txt',
-    '/path/to/other/file.jpg',
-];
-
-$email->addAttachments(...$attachments);
+$email = EmailBuilder::email()
+    ->withSubject('Welcome!')
+    ->withContent(SimpleContent::text('Start your free trial now!!!'))
+    ->from('me@test.com')
+    ->to('you@yourbusiness.com')
+    ->cc('cc@test.com')
+    ->bcc('bcc@test.com')
+    ->replyTo('reply.to@test.com')
+    ->attach('/path/to/my/file.txt')
+    ->build();
 ```
 
 Sending a templated email:
@@ -62,18 +43,38 @@ Sending a templated email:
 ```php
 <?php
 
-// Create a basic email
-$from          = new PhpEmail\Address('from@test.com');
-$recipients    = [
-    new PhpEmail\Address('user@test.com'), 
-    new PhpEmail\Address('named@test.com', 'Named User'),
-];
-$subject       = 'Domain Driven Emails';
-$template_data = [
-    'first_key'  => 'first value',
-    'second_key' => 'second value',
-];
-$content       = new PhpEmail\Content\TemplatedContent('my_template', $template_data);
+use PhpEmail\EmailBuilder;
+use PhpEmail\Content\TemplatedContent;
 
-$email = new PhpEmail\Email($subject, $content, $from, $recipients);
+$content = new TemplatedContent('my_templates_id', ['firstName' => 'Billy']);
+
+$email = EmailBuilder::email()
+    ->withSubject('Welcome!')
+    ->withContent($content)
+    ->from('me@test.com')
+    ->to('you@yourbusiness.com')
+    ->build();
 ```
+## Change log
+
+Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
+
+## Contributing
+
+Please see [CONTRIBUTING](CONTRIBUTING.md) and [CONDUCT](CONDUCT.md) for details.
+
+## Security
+
+If you discover any security related issues, please email [opensource@quartzy.com](mailto:opensource@quartzy.com) instead of using the issue tracker.
+
+## Credits
+
+- [Chris Muthig](https://github.com/camuthig)
+- [All Contributors][link-contributors]
+
+
+## License
+
+The Apache License, v2.0. Please see [License File](LICENSE) for more information.
+
+[link-contributors]: ../../contributors
