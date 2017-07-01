@@ -36,9 +36,10 @@ jobs:
     steps:
       - checkout
       - run:
-        command: |
-          mkdir -p /tmp/workspace/php-email
-          mv * .[!.]* /tmp/workspace/php-email/
+          name: Copy checkout to workspace
+          command: |
+            mkdir -p /tmp/workspace/php-email
+            mv * .[!.]* /tmp/workspace/php-email/
       - persist_to_workspace:
         root: *workspace_root
         paths:
