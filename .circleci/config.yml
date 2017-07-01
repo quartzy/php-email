@@ -53,6 +53,7 @@ jobs:
           root: *workspace_root
           paths:
             - php-email
+
   php56:
     working_directory: /home/circleci/php-email
     docker:
@@ -69,6 +70,7 @@ jobs:
             sh .circleci/test.sh 56
       - *report_results
       - *persist_results
+
   php70:
     working_directory: /home/circleci/php-email
     docker:
@@ -83,6 +85,9 @@ jobs:
             # Ensure xdebug is installed
             sudo sh .circleci/install_xdebug.sh
             sh .circleci/test.sh 70
+      - *report_results
+      - *persist_results
+
   php71:
     working_directory: /home/circleci/php-email
     docker:
@@ -97,6 +102,8 @@ jobs:
             # Ensure xdebug is installed
             sudo sh .circleci/install_xdebug.sh
             sh .circleci/test.sh 71
+      - *report_results
+      - *persist_results
 
 workflows:
   version: 2
@@ -113,3 +120,8 @@ workflows:
       - php71:
           requires:
             - checkout_code
+#      - codecov:
+#          requires:
+#            - php56
+#            - php70
+#            - php71
