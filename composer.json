@@ -26,5 +26,8 @@
         "psr-4": {
             "PhpEmail\\Test\\": "tests/"
         }
+    },
+    "scripts": {
+        "test": "phpunit"
     }
 }
