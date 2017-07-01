@@ -43,7 +43,7 @@ jobs:
         root: *workspace_root
         paths:
           - php-email
-  5.6:
+  php56:
     working_directory: /root/php-email
     docker:
       - image: notnoopci/php:5.6
@@ -52,7 +52,7 @@ jobs:
       - *load_code
       - *composer
       - *run_tests
-  7.0:
+  php70:
     working_directory: /root/php-email
     docker:
       - image: notnoopci/php:7.0
@@ -61,7 +61,7 @@ jobs:
       - *load_code
       - *composer
       - *run_tests
-  7.1:
+  php71:
     working_directory: /root/php-email
     docker:
       - image: notnoopci/php:7.1
@@ -77,12 +77,12 @@ workflows:
   build_and_test:
     jobs:
       - checkout_code
-      - 5.6:
+      - php56:
           requires:
             - checkout_code
-      - 7.0:
+      - php70:
           requires:
             - checkout_code
-      - 7.1:
+      - php71:
           requires:
             - checkout_code
