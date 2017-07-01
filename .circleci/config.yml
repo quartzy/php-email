@@ -16,6 +16,13 @@ references:
     attach_workspace:
       at: *workspace_root
 
+  results_root: &results_root
+    /tmp/results
+
+  attach_results: &attach_results
+    attach_workspace:
+      at: *results_root
+
   composer: &composer
     run:
       name: Install composer dependencies
@@ -33,9 +40,15 @@ references:
       path: reports
 
   persist_results: &persist_results
+    persist_to_workspace:
+      root: *results_root
+      paths:
+        - reports
+
+  store_results: &store_results
     store_artifacts:
-      path: reports/
-      destination: tests_report/
+      path: *results_root
+      destination: test_reports/
 
 jobs:
   checkout_code:
@@ -105,6 +118,14 @@ jobs:
       - *report_results
       - *persist_results
 
+  codecov:
+    working_directory: /home/circleci/php-email
+    docker:
+      - image: notnoopci/php:5.6
+    steps:
+      - *attach_results
+      - *store_results
+
 workflows:
   version: 2
 
@@ -120,8 +141,8 @@ workflows:
       - php71:
           requires:
             - checkout_code
-#      - codecov:
-#          requires:
-#            - php56
-#            - php70
-#            - php71
+      - codecov:
+          requires:
+            - php56
+            - php70
+            - php71
