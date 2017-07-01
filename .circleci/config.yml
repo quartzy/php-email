@@ -78,11 +78,11 @@ workflows:
     jobs:
       - checkout_code
       - 5.6:
-        requires:
-          - checkout_code
+          requires:
+            - checkout_code
       - 7.0:
-        requires:
-          - checkout_code
+          requires:
+            - checkout_code
       - 7.1:
-        requires:
-          - checkout_code
+          requires:
+            - checkout_code
