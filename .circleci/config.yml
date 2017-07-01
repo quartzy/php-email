@@ -28,6 +28,15 @@ references:
         # Move all files and dotfiles to current directory
         mv /tmp/workspace/php-email/* /tmp/workspace/php-email/.[!.]* .
 
+  report_results: &report_results
+    store_test_results:
+      path: reports
+
+  persist_results: &persist_results
+    store_artifacts:
+      path: reports/
+      destination: tests_report/
+
 jobs:
   checkout_code:
     working_directory: /home/circleci/php-email
@@ -52,7 +61,14 @@ jobs:
       - *attach_workspace
       - *load_code
       - *composer
-      - *run_tests
+      - run:
+          name: Run tests
+          command: |
+            # Ensure xdebug is installed
+            sudo sh .circleci/install_xdebug.sh
+            sh .circleci/test.sh 56
+      - *report_results
+      - *persist_results
   php70:
     working_directory: /home/circleci/php-email
     docker:
@@ -61,7 +77,12 @@ jobs:
       - *attach_workspace
       - *load_code
       - *composer
-      - *run_tests
+      - run:
+          name: Run tests
+          command: |
+            # Ensure xdebug is installed
+            sudo sh .circleci/install_xdebug.sh
+            sh .circleci/test.sh 70
   php71:
     working_directory: /home/circleci/php-email
     docker:
@@ -70,7 +91,12 @@ jobs:
       - *attach_workspace
       - *load_code
       - *composer
-      - *run_tests
+      - run:
+          name: Run tests
+          command: |
+            # Ensure xdebug is installed
+            sudo sh .circleci/install_xdebug.sh
+            sh .circleci/test.sh 71
 
 workflows:
   version: 2

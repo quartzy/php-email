@@ -3,5 +3,6 @@
 /composer.lock
 /.composer
 
+reports
 coverage.xml
 junit.xml

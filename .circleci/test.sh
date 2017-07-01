@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
 
-./vendor/bin/phpunit --log-junit junit.xml --coverage-clover=coverage.xml
+mkdir reports
+./vendor/bin/phpunit --log-junit "reports/junit-php$1.xml" --coverage-clover="reports/coverage-php$1.xml"
