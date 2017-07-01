@@ -1,0 +1,88 @@
+version: 2
+
+references:
+  run_tests: &run_tests
+    run:
+      name: Running tests
+      command: |
+        # Ensure xdebug is installed
+        sudo sh .circleci/install_xdebug.sh
+        sh .circleci/test.sh
+
+  workspace_root: &workspace_root
+    /tmp/workspace
+
+  attach_workspace: &attach_workspace
+    attach_workspace:
+      at: *workspace_root
+
+  composer: &composer
+    run:
+      name: Install composer dependencies
+      command: composer install
+
+  load_code: &load_code
+    run:
+      name: load code from workspace
+      command: |
+        # Move all files and dotfiles to current directory
+        mv /tmp/workspace/php-email/* /tmp/workspace/php-email/.[!.]* .
+
+jobs:
+  checkout_code:
+    working_directory: /root/php-email
+    docker:
+      - image: notnoopci/php:5.6
+    steps:
+      - checkout
+      - run:
+        command: |
+          mkdir -p /tmp/workspace/php-email
+          mv * .[!.]* /tmp/workspace/php-email/
+      - persist_to_workspace:
+        root: *workspace_root
+        paths:
+          - php-email
+  5.6:
+    working_directory: /root/php-email
+    docker:
+      - image: notnoopci/php:5.6
+    steps:
+      - *attach_workspace
+      - *load_code
+      - *composer
+      - *run_tests
+  7.0:
+    working_directory: /root/php-email
+    docker:
+      - image: notnoopci/php:7.0
+    steps:
+      - *attach_workspace
+      - *load_code
+      - *composer
+      - *run_tests
+  7.1:
+    working_directory: /root/php-email
+    docker:
+      - image: notnoopci/php:7.1
+    steps:
+      - *attach_workspace
+      - *load_code
+      - *composer
+      - *run_tests
+
+workflows:
+  version: 2
+
+  build_and_test:
+    jobs:
+      - checkout_code
+      - 5.6:
+        requires:
+          - checkout_code
+      - 7.0:
+        requires:
+          - checkout_code
+      - 7.1:
+        requires:
+          - checkout_code
