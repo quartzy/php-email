@@ -41,9 +41,9 @@ jobs:
             mkdir -p /tmp/workspace/php-email
             mv * .[!.]* /tmp/workspace/php-email/
       - persist_to_workspace:
-        root: *workspace_root
-        paths:
-          - php-email
+          root: *workspace_root
+          paths:
+            - php-email
   php56:
     working_directory: /root/php-email
     docker:
