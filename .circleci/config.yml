@@ -18,7 +18,7 @@ references:
   composer: &composer
     run:
       name: Install composer dependencies
-      command: composer update --prefer-lowest
+      command: composer update --prefer-lowest --no-interaction
 
   load_code: &load_code
     run:
