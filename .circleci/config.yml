@@ -1,14 +1,6 @@
 version: 2
 
 references:
-  run_tests: &run_tests
-    run:
-      name: Run tests
-      command: |
-        # Ensure xdebug is installed
-        sudo sh .circleci/install_xdebug.sh
-        sh .circleci/test.sh
-
   workspace_root: &workspace_root
     /tmp/workspace
 
@@ -39,16 +31,16 @@ references:
     store_test_results:
       path: reports
 
-  persist_results: &persist_results
-    persist_to_workspace:
-      root: *results_root
-      paths:
-        - reports
-
   store_results: &store_results
     store_artifacts:
       path: *results_root
       destination: test_reports/
+
+  push_coverage: &push_coverage
+    run:
+      name: Push the coverage reports to Codecov
+      command: |
+        bash <(curl -s https://codecov.io/bash) || echo 'Codecov failed to upload'
 
 jobs:
   checkout_code:
@@ -79,10 +71,11 @@ jobs:
           name: Run tests
           command: |
             # Ensure xdebug is installed
-            sudo sh .circleci/install_xdebug.sh
+            sudo sh .circleci/enable_xdebug.sh
             sh .circleci/test.sh 56
       - *report_results
-      - *persist_results
+      - *store_results
+      - *push_coverage
 
   php70:
     working_directory: /home/circleci/php-email
@@ -96,10 +89,11 @@ jobs:
           name: Run tests
           command: |
             # Ensure xdebug is installed
-            sudo sh .circleci/install_xdebug.sh
+            sudo sh .circleci/enable_xdebug.sh
             sh .circleci/test.sh 70
       - *report_results
-      - *persist_results
+      - *store_results
+      - *push_coverage
 
   php71:
     working_directory: /home/circleci/php-email
@@ -113,18 +107,11 @@ jobs:
           name: Run tests
           command: |
             # Ensure xdebug is installed
-            sudo sh .circleci/install_xdebug.sh
+            sudo sh .circleci/enable_xdebug.sh
             sh .circleci/test.sh 71
       - *report_results
-      - *persist_results
-
-  codecov:
-    working_directory: /home/circleci/php-email
-    docker:
-      - image: notnoopci/php:5.6
-    steps:
-      - *attach_results
       - *store_results
+      - *push_coverage
 
 workflows:
   version: 2
@@ -141,8 +128,3 @@ workflows:
       - php71:
           requires:
             - checkout_code
-      - codecov:
-          requires:
-            - php56
-            - php70
-            - php71
