@@ -20,7 +20,7 @@ interface Attachment
     public function getBase64Content();
 
     /**
-     * Return the MIME content type of the attachment
+     * Return the MIME content type of the attachment.
      *
      * @return string
      */
@@ -34,7 +34,7 @@ interface Attachment
     public function getName();
 
     /**
-     * Must be implemented to support comparison
+     * Must be implemented to support comparison.
      *
      * @return string
      */

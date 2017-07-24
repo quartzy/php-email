@@ -10,15 +10,16 @@ class AddressTest extends TestCase
     {
         return [
             [
-                "test@test.com",
-                "Tester TestTest"
+                'test@test.com',
+                'Tester TestTest',
             ],
             [
-                "test@test.com",
-                null
-            ]
+                'test@test.com',
+                null,
+            ],
         ];
     }
+
     /**
      * @testdox It should create a recipient and convert it to a string
      * @dataProvider recipients
