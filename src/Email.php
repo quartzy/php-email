@@ -230,9 +230,9 @@ class Email
     /**
      * @param string $subject
      *
-     * @return Email
-     *
      * @throws ValidationException
+     *
+     * @return Email
      */
     public function setSubject($subject)
     {
@@ -277,9 +277,9 @@ class Email
     /**
      * @param Attachment[] ...$attachments
      *
-     * @return $this
-     *
      * @throws ValidationException
+     *
+     * @return $this
      */
     public function setAttachments(Attachment ...$attachments)
     {
@@ -291,9 +291,9 @@ class Email
     /**
      * @param Attachment[] $attachments
      *
-     * @return $this
-     *
      * @throws ValidationException
+     *
+     * @return $this
      */
     public function addAttachments(Attachment ...$attachments)
     {

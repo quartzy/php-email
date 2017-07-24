@@ -90,7 +90,7 @@ class Validate
      */
     public function allInstanceOf($property, array $list, $type)
     {
-        $this->is($property, function() use ($list, $type) {
+        $this->is($property, function () use ($list, $type) {
             foreach ($list as $element) {
                 if (!$element instanceof $type) {
                     return false;
@@ -135,9 +135,9 @@ class Validate
     }
 
     /**
-     * @return void
-     *
      * @throws ValidationException
+     *
+     * @return void
      */
     public function now()
     {
