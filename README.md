@@ -1,4 +1,4 @@
-#Php-Email
+# Php-Email
 
 This is a domain-driven library for defining emails in PHP.
 
