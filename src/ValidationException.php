@@ -15,8 +15,8 @@ class ValidationException extends \InvalidArgumentException
 
         $count = 1;
         foreach ($exceptions as $property => $messages) {
-            foreach ($messages as $message) {
-                $message .= sprintf("%d) %s: %s\n", $count++, $property, $message);
+            foreach ($messages as $nestedMessage) {
+                $message .= sprintf("%d) %s: %s\n", $count++, $property, $nestedMessage);
             }
         }
 

@@ -40,7 +40,7 @@ class Email
     private $content;
 
     /**
-     * @var array|string[]
+     * @var array|Attachment[]
      */
     private $attachments = [];
 
