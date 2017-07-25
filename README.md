@@ -1,5 +1,12 @@
 # Php-Email
 
+[![Latest Version on Packagist][ico-version]][link-packagist]
+[![Software License][ico-license]](LICENSE)
+[![Build Status][ico-circleci]][link-circleci]
+[![Coverage Status][ico-codecov]][link-codecov]
+[![Style Status][ico-styleci]][link-styleci]
+[![Total Downloads][ico-downloads]][link-downloads]
+
 This is a domain-driven library for defining emails in PHP.
 
 Php Email brings three major benefits over other similar libraries: 
@@ -77,4 +84,16 @@ If you discover any security related issues, please email [opensource@quartzy.co
 
 The Apache License, v2.0. Please see [License File](LICENSE) for more information.
 
+[ico-version]: https://img.shields.io/packagist/v/quartzy/php-email.svg?style=flat-square
+[ico-license]: https://img.shields.io/badge/license-Apache%202.0-brightgreen.svg?style=flat-square
+[ico-circleci]: https://img.shields.io/circleci/project/github/quartzy/php-email/master.svg?style=flat-square
+[ico-codecov]: https://img.shields.io/codecov/c/github/quartzy/php-email.svg?style=flat-square
+[ico-styleci]: https://styleci.io/repos/81520386/shield
+[ico-downloads]: https://img.shields.io/packagist/dt/quartzy/php-email.svg?style=flat-square
+
+[link-packagist]: https://packagist.org/packages/quartzy/php-email
+[link-circleci]: https://circleci.com/gh/quartzy/php-email/tree/master
+[link-codecov]: http://codecov.io/github/quartzy/php-email?branch=master
+[link-styleci]: https://styleci.io/repos/81520386
+[link-downloads]: https://packagist.org/packages/quartzy/php-email
 [link-contributors]: ../../contributors
