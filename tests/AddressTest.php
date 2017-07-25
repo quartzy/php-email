@@ -10,15 +10,16 @@ class AddressTest extends TestCase
     {
         return [
             [
-                "test@test.com",
-                "Tester TestTest"
+                'test@test.com',
+                'Tester TestTest',
             ],
             [
-                "test@test.com",
-                null
-            ]
+                'test@test.com',
+                null,
+            ],
         ];
     }
+
     /**
      * @testdox It should create a recipient and convert it to a string
      * @dataProvider recipients
@@ -27,9 +28,11 @@ class AddressTest extends TestCase
     {
         $recipient = new Address($email, $name);
 
-        $expectedEmail  = "\"$email\"";
-        $expectedName   = $name ? "\"$name\"" : 'null';
-        $expectedString = "{\"email\":$expectedEmail,\"name\":$expectedName}";
+        $expectedString = $email;
+
+        if ($name) {
+            $expectedString = "\"$name\" <$email>";
+        }
 
         self::assertEquals($expectedString, $recipient->__toString());
     }
@@ -45,7 +48,7 @@ class AddressTest extends TestCase
     /**
      * @testdox It should validate that the email is acceptable
      * @dataProvider addresses
-     * @expectedException \Assert\LazyAssertionException
+     * @expectedException \PhpEmail\ValidationException
      */
     public function validatesEmail($email)
     {

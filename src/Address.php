@@ -2,8 +2,6 @@
 
 namespace PhpEmail;
 
-use Assert\LazyAssertion;
-
 class Address
 {
     /**
@@ -22,14 +20,14 @@ class Address
      * @param string      $email
      * @param string|null $name
      *
-     * @throws \Assert\LazyAssertionException
+     * @throws ValidationException
      */
     public function __construct($email, $name = null)
     {
-        (new LazyAssertion())
-            ->that($email, 'email')->email()
-            ->that($name, 'name')->nullOr()->string()
-            ->verifyNow();
+        Validate::that()
+            ->isEmail('email', $email)
+            ->isNullOrString('name', $name)
+            ->now();
 
         $this->email = $email;
         $this->name  = $name;
@@ -52,13 +50,24 @@ class Address
     }
 
     /**
+     * Create a RFC 2822 compliant string version of the address.
+     *
+     * @return string
+     */
+    public function toRfc2822()
+    {
+        if ($this->getName()) {
+            return sprintf('"%s" <%s>', $this->getName(), $this->getEmail());
+        }
+
+        return $this->getEmail();
+    }
+
+    /**
      * @return string
      */
     public function __toString()
     {
-        return json_encode([
-            'email' => $this->email,
-            'name'  => $this->name
-        ]);
+        return $this->toRfc2822();
     }
 }
