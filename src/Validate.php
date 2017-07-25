@@ -70,7 +70,7 @@ class Validate
      * @param string $property
      * @param mixed  $value
      *
-     * @return $this
+     * @return Validate
      */
     public function isEmail($property, $value)
     {
@@ -86,7 +86,7 @@ class Validate
      * @param array  $list
      * @param string $type
      *
-     * @return $this
+     * @return Validate
      */
     public function allInstanceOf($property, array $list, $type)
     {
@@ -108,7 +108,7 @@ class Validate
      * @param mixed  $value
      * @param int    $length
      *
-     * @return $this
+     * @return Validate
      */
     public function hasMinLength($property, $value, $length)
     {
@@ -123,7 +123,7 @@ class Validate
      * @param string $property
      * @param mixed  $value
      *
-     * @return $this
+     * @return Validate
      */
     public function isFile($property, $value)
     {

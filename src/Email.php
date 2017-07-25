@@ -94,7 +94,7 @@ class Email
     /**
      * @param array|Address[] ...$toRecipients
      *
-     * @return $this
+     * @return Email
      */
     public function addToRecipients(Address ...$toRecipients)
     {
@@ -114,7 +114,7 @@ class Email
     /**
      * @param array|Address[] ...$ccRecipients
      *
-     * @return $this
+     * @return Email
      */
     public function setCcRecipients(Address ...$ccRecipients)
     {
@@ -126,7 +126,7 @@ class Email
     /**
      * @param array|Address[] ...$ccRecipients
      *
-     * @return $this
+     * @return Email
      */
     public function addCcRecipients(Address ...$ccRecipients)
     {
@@ -146,7 +146,7 @@ class Email
     /**
      * @param array|Address[] ...$bccRecipients
      *
-     * @return $this
+     * @return Email
      */
     public function setBccRecipients(Address ...$bccRecipients)
     {
@@ -158,7 +158,7 @@ class Email
     /**
      * @param array|Address[] ...$bccRecipients
      *
-     * @return $this
+     * @return Email
      */
     public function addBccRecipients(Address ...$bccRecipients)
     {
@@ -210,7 +210,7 @@ class Email
     /**
      * @param array|Address[] ...$replyTos
      *
-     * @return $this
+     * @return Email
      */
     public function addReplyTos(Address ...$replyTos)
     {
@@ -279,7 +279,7 @@ class Email
      *
      * @throws ValidationException
      *
-     * @return $this
+     * @return Email
      */
     public function setAttachments(Attachment ...$attachments)
     {
@@ -293,7 +293,7 @@ class Email
      *
      * @throws ValidationException
      *
-     * @return $this
+     * @return Email
      */
     public function addAttachments(Attachment ...$attachments)
     {
