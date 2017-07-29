@@ -63,6 +63,7 @@ class AddressTest extends TestCase
             ['"Test Tester" <test@test.com>', new Address('test@test.com', 'Test Tester')],
         ];
     }
+
     /**
      * @testdox It should parse a valid RFC address string to an Address
      * @dataProvider addressStrings
@@ -83,6 +84,7 @@ class AddressTest extends TestCase
             [''],
         ];
     }
+
     /**
      * @testdox It should throw a validation exception if the string is not parsable to an Address
      * @expectedException \PhpEmail\ValidationException
