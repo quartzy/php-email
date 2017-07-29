@@ -76,22 +76,20 @@ class Address
             ->isString('str', $str)
             ->now();
 
-        if ($parts = explode(' ', $str)) {
-            // Pop the email address off of the parts of the string
-            $email = trim(array_pop($parts), '<>');
+        $parts = explode(' ', $str);
 
-            $name = null;
+        // Pop the email address off of the parts of the string
+        $email = trim(array_pop($parts), '<>');
 
-            // If there are more parts to the address string, combine them to use as the name
-            if ($parts) {
-                // Trim any extraneous quotes from the name
-                $name = trim(implode(' ', $parts), '"');
-            }
+        $name = null;
 
-            return new static($email, $name);
+        // If there are more parts to the address string, combine them to use as the name
+        if ($parts) {
+            // Trim any extraneous quotes from the name
+            $name = trim(implode(' ', $parts), '"');
         }
 
-        throw new ValidationException(sprintf('%s is not a valid RFC 2822 address string'));
+        return new static($email, $name);
     }
 
     /**

@@ -79,7 +79,8 @@ class AddressTest extends TestCase
             [123],
             [['test@test.com']],
             ['test@test'],
-            ['<test@test.com> Test Tester']
+            ['<test@test.com> Test Tester'],
+            [''],
         ];
     }
     /**
