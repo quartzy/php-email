@@ -64,6 +64,47 @@ class Address
     }
 
     /**
+     * Create an Address from a valid RFC 2822 compliant string.
+     *
+     * @param string $str
+     *
+     * @return Address
+     */
+    public static function fromRfc2822($str)
+    {
+        Validate::that()
+            ->isString('str', $str)
+            ->now();
+
+        $parts = explode(' ', $str);
+
+        // Pop the email address off of the parts of the string
+        $email = trim(array_pop($parts), '<>');
+
+        $name = null;
+
+        // If there are more parts to the address string, combine them to use as the name
+        if ($parts) {
+            // Trim any extraneous quotes from the name
+            $name = trim(implode(' ', $parts), '"');
+        }
+
+        return new static($email, $name);
+    }
+
+    /**
+     * Create an Address from a string.
+     *
+     * @param string $str
+     *
+     * @return Address
+     */
+    public static function fromString($str)
+    {
+        return self::fromRfc2822($str);
+    }
+
+    /**
      * @return string
      */
     public function __toString()
