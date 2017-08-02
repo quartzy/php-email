@@ -93,6 +93,18 @@ class Address
     }
 
     /**
+     * Create an Address from a string.
+     *
+     * @param string $str
+     *
+     * @return Address
+     */
+    public static function fromString($str)
+    {
+        return self::fromRfc2822($str);
+    }
+
+    /**
      * @return string
      */
     public function __toString()

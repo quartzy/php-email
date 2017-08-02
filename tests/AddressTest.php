@@ -94,4 +94,13 @@ class AddressTest extends TestCase
     {
         Address::fromRfc2822($str);
     }
+
+    /**
+     * @testdox It should parse a string into an Address
+     * @dataProvider addressStrings
+     */
+    public function parsesStringToAddress($str, $expected)
+    {
+        self::assertEquals(Address::fromString($str), $expected);
+    }
 }
