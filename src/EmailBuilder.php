@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PhpEmail;
 
 use PhpEmail\Attachment\FileAttachment;
@@ -49,7 +51,7 @@ class EmailBuilder
     /**
      * @return EmailBuilder
      */
-    public static function email()
+    public static function email(): EmailBuilder
     {
         return new static();
     }
@@ -58,9 +60,9 @@ class EmailBuilder
      * @param string      $email
      * @param string|null $name
      *
-     * @return self
+     * @return EmailBuilder
      */
-    public function to($email, $name = null)
+    public function to(string $email, ?string $name = null): EmailBuilder
     {
         $this->toRecipients[] = new Address($email, $name);
 
@@ -71,9 +73,9 @@ class EmailBuilder
      * @param string      $email
      * @param string|null $name
      *
-     * @return self
+     * @return EmailBuilder
      */
-    public function cc($email, $name = null)
+    public function cc(string $email, ?string $name = null): EmailBuilder
     {
         $this->ccRecipients[] = new Address($email, $name);
 
@@ -84,9 +86,9 @@ class EmailBuilder
      * @param string      $email
      * @param string|null $name
      *
-     * @return self
+     * @return EmailBuilder
      */
-    public function bcc($email, $name = null)
+    public function bcc(string $email, ?string $name = null): EmailBuilder
     {
         $this->bccRecipients[] = new Address($email, $name);
 
@@ -97,9 +99,9 @@ class EmailBuilder
      * @param string      $email
      * @param string|null $name
      *
-     * @return self
+     * @return EmailBuilder
      */
-    public function from($email, $name = null)
+    public function from(string $email, ?string $name = null): EmailBuilder
     {
         $this->from = new Address($email, $name);
 
@@ -110,9 +112,9 @@ class EmailBuilder
      * @param string      $email
      * @param string|null $name
      *
-     * @return self
+     * @return EmailBuilder
      */
-    public function replyTo($email, $name = null)
+    public function replyTo(string $email, ?string $name = null): EmailBuilder
     {
         $this->replyTos[] = new Address($email, $name);
 
@@ -122,9 +124,9 @@ class EmailBuilder
     /**
      * @param $subject
      *
-     * @return self
+     * @return EmailBuilder
      */
-    public function withSubject($subject)
+    public function withSubject(string $subject): EmailBuilder
     {
         $this->subject = $subject;
 
@@ -134,9 +136,9 @@ class EmailBuilder
     /**
      * @param Content $content
      *
-     * @return self
+     * @return EmailBuilder
      */
-    public function withContent(Content $content)
+    public function withContent(Content $content): EmailBuilder
     {
         $this->content = $content;
 
@@ -149,7 +151,7 @@ class EmailBuilder
      *
      * @return EmailBuilder
      */
-    public function attach($file, $name = null)
+    public function attach(string $file, ?string $name = null): EmailBuilder
     {
         $this->attachments[] = new FileAttachment($file, $name);
 
@@ -159,7 +161,7 @@ class EmailBuilder
     /**
      * @return Email
      */
-    public function build()
+    public function build(): Email
     {
         $email = new Email(
             $this->subject,

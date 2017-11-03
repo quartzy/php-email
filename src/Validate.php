@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PhpEmail;
 
 use Closure;
@@ -31,7 +33,7 @@ class Validate
     /**
      * @return Validate
      */
-    public static function that()
+    public static function that(): Validate
     {
         return new static();
     }
@@ -42,37 +44,7 @@ class Validate
      *
      * @return Validate
      */
-    public function isString($property, $value)
-    {
-        $this->is($property, function () use ($value) {
-            return is_string($value);
-        }, sprintf('Value expected to be string, type %s given.', gettype($value)));
-
-        return $this;
-    }
-
-    /**
-     * @param string $property
-     * @param $value
-     *
-     * @return Validate
-     */
-    public function isNullOrString($property, $value)
-    {
-        $this->is($property, function () use ($value) {
-            return is_null($value) || is_string($value);
-        }, sprintf('Value expected to be string, type %s given.', gettype($value)));
-
-        return $this;
-    }
-
-    /**
-     * @param string $property
-     * @param mixed  $value
-     *
-     * @return Validate
-     */
-    public function isEmail($property, $value)
+    public function isEmail($property, $value): Validate
     {
         $this->is($property, function () use ($value) {
             return filter_var($value, FILTER_VALIDATE_EMAIL);
@@ -88,7 +60,7 @@ class Validate
      *
      * @return Validate
      */
-    public function allInstanceOf($property, array $list, $type)
+    public function allInstanceOf($property, array $list, $type): Validate
     {
         $this->is($property, function () use ($list, $type) {
             foreach ($list as $element) {
@@ -110,7 +82,7 @@ class Validate
      *
      * @return Validate
      */
-    public function hasMinLength($property, $value, $length)
+    public function hasMinLength($property, $value, $length): Validate
     {
         $this->is($property, function () use ($value, $length) {
             return is_string($value) && mb_strlen($value) >= $length;
@@ -125,7 +97,7 @@ class Validate
      *
      * @return Validate
      */
-    public function isFile($property, $value)
+    public function isFile($property, $value): Validate
     {
         $this->is($property, function () use ($value) {
             return is_string($value) && is_file($value);
@@ -139,7 +111,7 @@ class Validate
      *
      * @return void
      */
-    public function now()
+    public function now(): void
     {
         $exceptions = [];
 

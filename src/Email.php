@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PhpEmail;
 
 class Email
@@ -53,14 +55,13 @@ class Email
      * @throws ValidationException
      */
     public function __construct(
-        $subject,
+        string $subject,
         Content $content,
         Address $from,
         array $toRecipients
     ) {
         Validate::that()
             ->allInstanceOf('toRecipients', $toRecipients, Address::class)
-            ->isString('subject', $subject)
             ->hasMinLength('subject', $subject, 1)
             ->now();
 
@@ -74,7 +75,7 @@ class Email
     /**
      * @return array|Address[]
      */
-    public function getToRecipients()
+    public function getToRecipients(): array
     {
         return $this->toRecipients;
     }
@@ -84,7 +85,7 @@ class Email
      *
      * @return Email
      */
-    public function setToRecipients(Address ...$toRecipients)
+    public function setToRecipients(Address ...$toRecipients): Email
     {
         $this->toRecipients = $toRecipients;
 
@@ -96,7 +97,7 @@ class Email
      *
      * @return Email
      */
-    public function addToRecipients(Address ...$toRecipients)
+    public function addToRecipients(Address ...$toRecipients): Email
     {
         $this->toRecipients = array_values(array_unique(array_merge($this->toRecipients, $toRecipients)));
 
@@ -106,7 +107,7 @@ class Email
     /**
      * @return array|Address[]
      */
-    public function getCcRecipients()
+    public function getCcRecipients(): array
     {
         return $this->ccRecipients;
     }
@@ -116,7 +117,7 @@ class Email
      *
      * @return Email
      */
-    public function setCcRecipients(Address ...$ccRecipients)
+    public function setCcRecipients(Address ...$ccRecipients): Email
     {
         $this->ccRecipients = $ccRecipients;
 
@@ -128,7 +129,7 @@ class Email
      *
      * @return Email
      */
-    public function addCcRecipients(Address ...$ccRecipients)
+    public function addCcRecipients(Address ...$ccRecipients): Email
     {
         $this->ccRecipients = array_values(array_unique(array_merge($this->ccRecipients, $ccRecipients)));
 
@@ -138,7 +139,7 @@ class Email
     /**
      * @return array|Address[]
      */
-    public function getBccRecipients()
+    public function getBccRecipients(): array
     {
         return $this->bccRecipients;
     }
@@ -148,7 +149,7 @@ class Email
      *
      * @return Email
      */
-    public function setBccRecipients(Address ...$bccRecipients)
+    public function setBccRecipients(Address ...$bccRecipients): Email
     {
         $this->bccRecipients = $bccRecipients;
 
@@ -160,7 +161,7 @@ class Email
      *
      * @return Email
      */
-    public function addBccRecipients(Address ...$bccRecipients)
+    public function addBccRecipients(Address ...$bccRecipients): Email
     {
         $this->bccRecipients = array_values(array_unique(array_merge($this->bccRecipients, $bccRecipients)));
 
@@ -170,7 +171,7 @@ class Email
     /**
      * @return Address
      */
-    public function getFrom()
+    public function getFrom(): Address
     {
         return $this->from;
     }
@@ -180,7 +181,7 @@ class Email
      *
      * @return Email
      */
-    public function setFrom(Address $from)
+    public function setFrom(Address $from): Email
     {
         $this->from = $from;
 
@@ -190,7 +191,7 @@ class Email
     /**
      * @return array|Address[]
      */
-    public function getReplyTos()
+    public function getReplyTos(): array
     {
         return $this->replyTos;
     }
@@ -200,7 +201,7 @@ class Email
      *
      * @return Email
      */
-    public function setReplyTos(Address ...$replyTos)
+    public function setReplyTos(Address ...$replyTos): Email
     {
         $this->replyTos = $replyTos;
 
@@ -212,7 +213,7 @@ class Email
      *
      * @return Email
      */
-    public function addReplyTos(Address ...$replyTos)
+    public function addReplyTos(Address ...$replyTos): Email
     {
         $this->replyTos = array_values(array_unique(array_merge($this->replyTos, $replyTos)));
 
@@ -222,7 +223,7 @@ class Email
     /**
      * @return string
      */
-    public function getSubject()
+    public function getSubject(): string
     {
         return $this->subject;
     }
@@ -234,10 +235,9 @@ class Email
      *
      * @return Email
      */
-    public function setSubject($subject)
+    public function setSubject(string $subject): Email
     {
         Validate::that()
-            ->isString('subject', $subject)
             ->hasMinLength('subject', $subject, 1)
             ->now();
 
@@ -249,7 +249,7 @@ class Email
     /**
      * @return Content
      */
-    public function getContent()
+    public function getContent(): Content
     {
         return $this->content;
     }
@@ -259,7 +259,7 @@ class Email
      *
      * @return Email
      */
-    public function setContent(Content $content)
+    public function setContent(Content $content): Email
     {
         $this->content = $content;
 
@@ -269,7 +269,7 @@ class Email
     /**
      * @return array|Attachment[]
      */
-    public function getAttachments()
+    public function getAttachments(): array
     {
         return $this->attachments;
     }
@@ -281,7 +281,7 @@ class Email
      *
      * @return Email
      */
-    public function setAttachments(Attachment ...$attachments)
+    public function setAttachments(Attachment ...$attachments): Email
     {
         $this->attachments = $attachments;
 
@@ -295,7 +295,7 @@ class Email
      *
      * @return Email
      */
-    public function addAttachments(Attachment ...$attachments)
+    public function addAttachments(Attachment ...$attachments): Email
     {
         $this->attachments = array_values(array_unique(array_merge($this->attachments, $attachments)));
 

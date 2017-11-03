@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PhpEmail\Attachment;
 
 use PhpEmail\Attachment;
@@ -23,11 +25,10 @@ class FileAttachment implements Attachment
      *
      * @throws \PhpEmail\ValidationException
      */
-    public function __construct($file, $name = null)
+    public function __construct(string $file, ?string $name = null)
     {
         Validate::that()
             ->isFile('file', $file)
-            ->isNullOrString('name', $name)
             ->now();
 
         $this->file = $file;
@@ -37,7 +38,7 @@ class FileAttachment implements Attachment
     /**
      * @return string
      */
-    public function getFile()
+    public function getFile(): string
     {
         return $this->file;
     }
@@ -45,7 +46,7 @@ class FileAttachment implements Attachment
     /**
      * {@inheritdoc}
      */
-    public function getContent()
+    public function getContent(): string
     {
         return file_get_contents($this->file);
     }
@@ -53,7 +54,7 @@ class FileAttachment implements Attachment
     /**
      * {@inheritdoc}
      */
-    public function getBase64Content()
+    public function getBase64Content(): string
     {
         return base64_encode($this->getContent());
     }
@@ -61,7 +62,7 @@ class FileAttachment implements Attachment
     /**
      * {@inheritdoc}
      */
-    public function getContentType()
+    public function getContentType(): string
     {
         return mime_content_type($this->file);
     }
@@ -69,7 +70,7 @@ class FileAttachment implements Attachment
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -77,7 +78,7 @@ class FileAttachment implements Attachment
     /**
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return json_encode([
             'file' => $this->file,

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PhpEmail\Test\Content;
 
 use PhpEmail\Content\TemplatedContent;
