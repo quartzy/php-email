@@ -65,9 +65,9 @@ class Email
             ->hasMinLength('subject', $subject, 1)
             ->now();
 
-        $this->content       = $content;
-        $this->from          = $from;
-        $this->subject       = $subject;
+        $this->content = $content;
+        $this->from    = $from;
+        $this->subject = $subject;
 
         $this->setToRecipients(...$toRecipients);
     }
