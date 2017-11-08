@@ -85,7 +85,7 @@ class Email
      *
      * @return Email
      */
-    public function setToRecipients(Address ...$toRecipients): Email
+    public function setToRecipients(Address ...$toRecipients): self
     {
         $this->toRecipients = $toRecipients;
 
@@ -97,7 +97,7 @@ class Email
      *
      * @return Email
      */
-    public function addToRecipients(Address ...$toRecipients): Email
+    public function addToRecipients(Address ...$toRecipients): self
     {
         $this->toRecipients = array_values(array_unique(array_merge($this->toRecipients, $toRecipients)));
 
@@ -117,7 +117,7 @@ class Email
      *
      * @return Email
      */
-    public function setCcRecipients(Address ...$ccRecipients): Email
+    public function setCcRecipients(Address ...$ccRecipients): self
     {
         $this->ccRecipients = $ccRecipients;
 
@@ -129,7 +129,7 @@ class Email
      *
      * @return Email
      */
-    public function addCcRecipients(Address ...$ccRecipients): Email
+    public function addCcRecipients(Address ...$ccRecipients): self
     {
         $this->ccRecipients = array_values(array_unique(array_merge($this->ccRecipients, $ccRecipients)));
 
@@ -149,7 +149,7 @@ class Email
      *
      * @return Email
      */
-    public function setBccRecipients(Address ...$bccRecipients): Email
+    public function setBccRecipients(Address ...$bccRecipients): self
     {
         $this->bccRecipients = $bccRecipients;
 
@@ -161,7 +161,7 @@ class Email
      *
      * @return Email
      */
-    public function addBccRecipients(Address ...$bccRecipients): Email
+    public function addBccRecipients(Address ...$bccRecipients): self
     {
         $this->bccRecipients = array_values(array_unique(array_merge($this->bccRecipients, $bccRecipients)));
 
@@ -181,7 +181,7 @@ class Email
      *
      * @return Email
      */
-    public function setFrom(Address $from): Email
+    public function setFrom(Address $from): self
     {
         $this->from = $from;
 
@@ -201,7 +201,7 @@ class Email
      *
      * @return Email
      */
-    public function setReplyTos(Address ...$replyTos): Email
+    public function setReplyTos(Address ...$replyTos): self
     {
         $this->replyTos = $replyTos;
 
@@ -213,7 +213,7 @@ class Email
      *
      * @return Email
      */
-    public function addReplyTos(Address ...$replyTos): Email
+    public function addReplyTos(Address ...$replyTos): self
     {
         $this->replyTos = array_values(array_unique(array_merge($this->replyTos, $replyTos)));
 
@@ -235,7 +235,7 @@ class Email
      *
      * @return Email
      */
-    public function setSubject(string $subject): Email
+    public function setSubject(string $subject): self
     {
         Validate::that()
             ->hasMinLength('subject', $subject, 1)
@@ -259,7 +259,7 @@ class Email
      *
      * @return Email
      */
-    public function setContent(Content $content): Email
+    public function setContent(Content $content): self
     {
         $this->content = $content;
 
@@ -281,7 +281,7 @@ class Email
      *
      * @return Email
      */
-    public function setAttachments(Attachment ...$attachments): Email
+    public function setAttachments(Attachment ...$attachments): self
     {
         $this->attachments = $attachments;
 
@@ -295,7 +295,7 @@ class Email
      *
      * @return Email
      */
-    public function addAttachments(Attachment ...$attachments): Email
+    public function addAttachments(Attachment ...$attachments): self
     {
         $this->attachments = array_values(array_unique(array_merge($this->attachments, $attachments)));
 

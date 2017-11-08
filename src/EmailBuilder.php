@@ -51,7 +51,7 @@ class EmailBuilder
     /**
      * @return EmailBuilder
      */
-    public static function email(): EmailBuilder
+    public static function email(): self
     {
         return new static();
     }
@@ -62,7 +62,7 @@ class EmailBuilder
      *
      * @return EmailBuilder
      */
-    public function to(string $email, ?string $name = null): EmailBuilder
+    public function to(string $email, ?string $name = null): self
     {
         $this->toRecipients[] = new Address($email, $name);
 
@@ -75,7 +75,7 @@ class EmailBuilder
      *
      * @return EmailBuilder
      */
-    public function cc(string $email, ?string $name = null): EmailBuilder
+    public function cc(string $email, ?string $name = null): self
     {
         $this->ccRecipients[] = new Address($email, $name);
 
@@ -88,7 +88,7 @@ class EmailBuilder
      *
      * @return EmailBuilder
      */
-    public function bcc(string $email, ?string $name = null): EmailBuilder
+    public function bcc(string $email, ?string $name = null): self
     {
         $this->bccRecipients[] = new Address($email, $name);
 
@@ -101,7 +101,7 @@ class EmailBuilder
      *
      * @return EmailBuilder
      */
-    public function from(string $email, ?string $name = null): EmailBuilder
+    public function from(string $email, ?string $name = null): self
     {
         $this->from = new Address($email, $name);
 
@@ -114,7 +114,7 @@ class EmailBuilder
      *
      * @return EmailBuilder
      */
-    public function replyTo(string $email, ?string $name = null): EmailBuilder
+    public function replyTo(string $email, ?string $name = null): self
     {
         $this->replyTos[] = new Address($email, $name);
 
@@ -126,7 +126,7 @@ class EmailBuilder
      *
      * @return EmailBuilder
      */
-    public function withSubject(string $subject): EmailBuilder
+    public function withSubject(string $subject): self
     {
         $this->subject = $subject;
 
@@ -138,7 +138,7 @@ class EmailBuilder
      *
      * @return EmailBuilder
      */
-    public function withContent(Content $content): EmailBuilder
+    public function withContent(Content $content): self
     {
         $this->content = $content;
 
@@ -151,7 +151,7 @@ class EmailBuilder
      *
      * @return EmailBuilder
      */
-    public function attach(string $file, ?string $name = null): EmailBuilder
+    public function attach(string $file, ?string $name = null): self
     {
         $this->attachments[] = new FileAttachment($file, $name);
 

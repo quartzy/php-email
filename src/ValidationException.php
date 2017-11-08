@@ -11,7 +11,7 @@ class ValidationException extends \InvalidArgumentException
      *
      * @return ValidationException
      */
-    public static function fromArray(array $exceptions): ValidationException
+    public static function fromArray(array $exceptions): self
     {
         $message = sprintf('Failed %d validations: ', count($exceptions)) . "\n";
 

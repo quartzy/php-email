@@ -38,7 +38,7 @@ class SimpleContent implements Content\Contracts\SimpleContent
      *
      * @return SimpleContent
      */
-    public static function html(?string $html): SimpleContent
+    public static function html(?string $html): self
     {
         return new self($html, null);
     }
@@ -48,7 +48,7 @@ class SimpleContent implements Content\Contracts\SimpleContent
      *
      * @return SimpleContent
      */
-    public static function text(?string $text): SimpleContent
+    public static function text(?string $text): self
     {
         return new self(null, $text);
     }

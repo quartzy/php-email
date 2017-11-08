@@ -33,7 +33,7 @@ class Validate
     /**
      * @return Validate
      */
-    public static function that(): Validate
+    public static function that(): self
     {
         return new static();
     }
@@ -44,7 +44,7 @@ class Validate
      *
      * @return Validate
      */
-    public function isEmail($property, $value): Validate
+    public function isEmail($property, $value): self
     {
         $this->is($property, function () use ($value) {
             return filter_var($value, FILTER_VALIDATE_EMAIL);
@@ -60,7 +60,7 @@ class Validate
      *
      * @return Validate
      */
-    public function allInstanceOf($property, array $list, $type): Validate
+    public function allInstanceOf($property, array $list, $type): self
     {
         $this->is($property, function () use ($list, $type) {
             foreach ($list as $element) {
@@ -82,7 +82,7 @@ class Validate
      *
      * @return Validate
      */
-    public function hasMinLength($property, $value, $length): Validate
+    public function hasMinLength($property, $value, $length): self
     {
         $this->is($property, function () use ($value, $length) {
             return is_string($value) && mb_strlen($value) >= $length;
@@ -97,7 +97,7 @@ class Validate
      *
      * @return Validate
      */
-    public function isFile($property, $value): Validate
+    public function isFile($property, $value): self
     {
         $this->is($property, function () use ($value) {
             return is_string($value) && is_file($value);
