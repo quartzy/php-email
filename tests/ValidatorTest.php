@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PhpEmail\Test;
 
 use PhpEmail\Address;
@@ -12,72 +14,6 @@ use PhpEmail\Validate;
  */
 class ValidatorTest extends TestCase
 {
-    /**
-     * @testdox It should validate a values as a string
-     */
-    public function validatesString()
-    {
-        Validate::that()
-            ->isString('prop', 'string')
-            ->now();
-
-        self::assertTrue(true);
-    }
-
-    public function nonStrings()
-    {
-        return [
-            [1234],
-            [['ar', 'ray']],
-            [null],
-        ];
-    }
-
-    /**
-     * @testdox It should throw an error if the value is not a string
-     * @expectedException \PhpEmail\ValidationException
-     * @dataProvider nonStrings
-     */
-    public function invalidatesNonString($value)
-    {
-        Validate::that()
-            ->isString('prop', $value)
-            ->now();
-    }
-
-    /**
-     * @testdox It should validate a value as either null or a string
-     */
-    public function validatesNullOrString()
-    {
-        Validate::that()
-            ->isNullOrString('null', null)
-            ->isNullOrString('string', 'string')
-            ->now();
-
-        self::assertTrue(true);
-    }
-
-    public function nonNullOrStrings()
-    {
-        return [
-            [123],
-            [['ar', 'ray']],
-        ];
-    }
-
-    /**
-     * @testdox It should throw an error if the value is not null or a string
-     * @expectedException \PhpEmail\ValidationException
-     * @dataProvider nonNullOrStrings
-     */
-    public function invalidatesNonNullOrString($value)
-    {
-        Validate::that()
-            ->isNullOrString('value', $value)
-            ->now();
-    }
-
     /**
      * @testdox It should validate that a value is a valid email address
      */
@@ -190,7 +126,7 @@ class ValidatorTest extends TestCase
     public function validatesPropertyMultipleTimes()
     {
         Validate::that()
-            ->isString('str', 1234)
+            ->isEmail('str', 1234)
             ->hasMinLength('str', 1234, 5)
             ->now();
     }

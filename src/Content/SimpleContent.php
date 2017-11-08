@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PhpEmail\Content;
 
 use PhpEmail\Content;
@@ -25,7 +27,7 @@ class SimpleContent implements Content\Contracts\SimpleContent
      * @param string|null $html
      * @param string|null $text
      */
-    public function __construct($html, $text)
+    public function __construct(?string $html, ?string $text)
     {
         $this->html = $html;
         $this->text = $text;
@@ -34,9 +36,9 @@ class SimpleContent implements Content\Contracts\SimpleContent
     /**
      * @param string $html
      *
-     * @return self
+     * @return SimpleContent
      */
-    public static function html($html)
+    public static function html(?string $html): SimpleContent
     {
         return new self($html, null);
     }
@@ -44,9 +46,9 @@ class SimpleContent implements Content\Contracts\SimpleContent
     /**
      * @param string $text
      *
-     * @return self
+     * @return SimpleContent
      */
-    public static function text($text)
+    public static function text(?string $text): SimpleContent
     {
         return new self(null, $text);
     }
@@ -54,7 +56,7 @@ class SimpleContent implements Content\Contracts\SimpleContent
     /**
      * @return string|null
      */
-    public function getHtml()
+    public function getHtml(): ?string
     {
         return $this->html;
     }
@@ -62,7 +64,7 @@ class SimpleContent implements Content\Contracts\SimpleContent
     /**
      * @return string|null
      */
-    public function getText()
+    public function getText(): ?string
     {
         return $this->text;
     }

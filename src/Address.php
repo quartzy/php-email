@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PhpEmail;
 
 class Address
@@ -22,11 +24,10 @@ class Address
      *
      * @throws ValidationException
      */
-    public function __construct($email, $name = null)
+    public function __construct(string $email, ?string $name = null)
     {
         Validate::that()
             ->isEmail('email', $email)
-            ->isNullOrString('name', $name)
             ->now();
 
         $this->email = $email;
@@ -36,7 +37,7 @@ class Address
     /**
      * @return string
      */
-    public function getEmail()
+    public function getEmail(): string
     {
         return $this->email;
     }
@@ -44,7 +45,7 @@ class Address
     /**
      * @return string|null
      */
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -54,7 +55,7 @@ class Address
      *
      * @return string
      */
-    public function toRfc2822()
+    public function toRfc2822(): string
     {
         if ($this->getName()) {
             return sprintf('"%s" <%s>', $this->getName(), $this->getEmail());
@@ -70,12 +71,8 @@ class Address
      *
      * @return Address
      */
-    public static function fromRfc2822($str)
+    public static function fromRfc2822(string $str)
     {
-        Validate::that()
-            ->isString('str', $str)
-            ->now();
-
         $parts = explode(' ', $str);
 
         // Pop the email address off of the parts of the string
@@ -99,7 +96,7 @@ class Address
      *
      * @return Address
      */
-    public static function fromString($str)
+    public static function fromString(string $str)
     {
         return self::fromRfc2822($str);
     }
@@ -107,7 +104,7 @@ class Address
     /**
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->toRfc2822();
     }

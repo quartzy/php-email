@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PhpEmail\Content\Contracts;
 
 use PhpEmail\Content;
@@ -16,10 +18,10 @@ interface TemplatedContent extends Content
     /**
      * @return string
      */
-    public function getTemplateId();
+    public function getTemplateId(): string;
 
     /**
      * @return array|string[]
      */
-    public function getTemplateData();
+    public function getTemplateData(): array;
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PhpEmail\Test;
 
 use PhpEmail\Address;
@@ -76,9 +78,6 @@ class AddressTest extends TestCase
     public function invalidAddressStrings()
     {
         return [
-            [null],
-            [123],
-            [['test@test.com']],
             ['test@test'],
             ['<test@test.com> Test Tester'],
             [''],

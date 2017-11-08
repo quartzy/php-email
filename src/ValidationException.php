@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PhpEmail;
 
 class ValidationException extends \InvalidArgumentException
@@ -9,7 +11,7 @@ class ValidationException extends \InvalidArgumentException
      *
      * @return ValidationException
      */
-    public static function fromArray(array $exceptions)
+    public static function fromArray(array $exceptions): ValidationException
     {
         $message = sprintf('Failed %d validations: ', count($exceptions)) . "\n";
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PhpEmail\Content;
 
 use PhpEmail\Content;
@@ -20,7 +22,7 @@ class TemplatedContent implements Content\Contracts\TemplatedContent
      * @param string $templateId
      * @param array  $templateData
      */
-    public function __construct($templateId, array $templateData)
+    public function __construct(string $templateId, array $templateData)
     {
         $this->templateId   = $templateId;
         $this->templateData = $templateData;
@@ -29,7 +31,7 @@ class TemplatedContent implements Content\Contracts\TemplatedContent
     /**
      * @return string
      */
-    public function getTemplateId()
+    public function getTemplateId(): string
     {
         return $this->templateId;
     }
@@ -37,7 +39,7 @@ class TemplatedContent implements Content\Contracts\TemplatedContent
     /**
      * @return array|string[]
      */
-    public function getTemplateData()
+    public function getTemplateData(): array
     {
         return $this->templateData;
     }
