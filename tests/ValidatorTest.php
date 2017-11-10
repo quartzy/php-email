@@ -154,7 +154,7 @@ class ValidatorTest extends TestCase
         self::expectException(ValidationException::class);
 
         $shm_key = ftok(__FILE__, 't');
-        $shm = shmop_open($shm_key, "c", 0644, 100);
+        $shm     = shmop_open($shm_key, 'c', 0644, 100);
 
         Validate::that()
             ->isStream('shm', $shm)

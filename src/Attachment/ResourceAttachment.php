@@ -99,7 +99,6 @@ class ResourceAttachment implements Attachment
         }
 
         return $this->contentType;
-
     }
 
     /**

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace PhpEmail\Test\Attachment;
 
-use PhpEmail\Attachment\FileAttachment;
 use PhpEmail\Attachment\UrlAttachment;
 use PhpEmail\Test\TestCase;
 
@@ -25,7 +24,6 @@ class UrlAttachmentTest extends TestCase
 
         $command = 'php -S localhost:8777 -t /tmp >/dev/null 2>&1 & echo $!';
 
-
         // Execute the command and store the process ID
         $output = [];
         exec($command, $output);
@@ -35,7 +33,7 @@ class UrlAttachmentTest extends TestCase
         sleep(1);
 
         // Kill the web server when the process ends
-        register_shutdown_function(function() {
+        register_shutdown_function(function () {
             exec('kill ' . self::$pid);
         });
     }

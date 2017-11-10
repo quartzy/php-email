@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace PhpEmail\Test\Attachment;
 
-use PhpEmail\Attachment\FileAttachment;
 use PhpEmail\Attachment\ResourceAttachment;
 use PhpEmail\Test\TestCase;
 
