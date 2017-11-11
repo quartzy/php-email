@@ -148,19 +148,15 @@ class ValidatorTest extends TestCase
 
     /**
      * @testdox It should throw an error if the resource is not a stream
+     * @expectedException \PhpEmail\ValidationException
      */
     public function invalidatesNonStream()
     {
-        self::expectException(ValidationException::class);
-
-        $shm_key = ftok(__FILE__, 't');
-        $shm     = shmop_open($shm_key, 'c', 0644, 100);
+        $xml = xml_parser_create();
 
         Validate::that()
-            ->isStream('shm', $shm)
+            ->isStream('xml', $xml)
             ->now();
-
-        shmop_close($shm);
     }
 
     /**
