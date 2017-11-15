@@ -115,7 +115,7 @@ class ValidatorTest extends TestCase
     public function validatesFile()
     {
         Validate::that()
-            ->isFile('file', '/tmp/validate.txt')
+            ->isFile('file', self::TEST_FILE)
             ->now();
 
         self::assertTrue(true);
