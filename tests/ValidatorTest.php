@@ -7,6 +7,7 @@ namespace PhpEmail\Test;
 use PhpEmail\Address;
 use PhpEmail\Content;
 use PhpEmail\Validate;
+use PhpEmail\ValidationException;
 
 /**
  * @covers \PhpEmail\Validate
@@ -14,6 +15,22 @@ use PhpEmail\Validate;
  */
 class ValidatorTest extends TestCase
 {
+    private const TEST_FILE = '/tmp/validate.txt';
+
+    public static function setUpBeforeClass()
+    {
+        parent::setUpBeforeClass();
+
+        file_put_contents(self::TEST_FILE, 'test');
+    }
+
+    public static function tearDownAfterClass()
+    {
+        parent::tearDownAfterClass();
+
+        unlink(self::TEST_FILE);
+    }
+
     /**
      * @testdox It should validate that a value is a valid email address
      */
@@ -97,15 +114,11 @@ class ValidatorTest extends TestCase
      */
     public function validatesFile()
     {
-        file_put_contents('/tmp/validate.txt', 'test');
-
         Validate::that()
-            ->isFile('file', '/tmp/validate.txt')
+            ->isFile('file', self::TEST_FILE)
             ->now();
 
         self::assertTrue(true);
-
-        unlink('/tmp/validate.txt');
     }
 
     /**
@@ -116,6 +129,57 @@ class ValidatorTest extends TestCase
     {
         Validate::that()
             ->isFile('file', 'blah.txt')
+            ->now();
+    }
+
+    /**
+     * @testdox It should validate that a resource is a stream
+     */
+    public function validatesStreams()
+    {
+        $fh = fopen(self::TEST_FILE, 'r');
+
+        Validate::that()
+            ->isStream('fh', $fh)
+            ->now();
+
+        self::assertTrue(true);
+    }
+
+    /**
+     * @testdox It should throw an error if the resource is not a stream
+     * @expectedException \PhpEmail\ValidationException
+     */
+    public function invalidatesNonStream()
+    {
+        $xml = xml_parser_create();
+
+        Validate::that()
+            ->isStream('xml', $xml)
+            ->now();
+    }
+
+    /**
+     * @testdox It should validate an full URL
+     */
+    public function validatesUrl()
+    {
+        Validate::that()
+            ->isUrl('url', 'http://test.com/test.jpg')
+            ->now();
+
+        self::assertTrue(true);
+    }
+
+    /**
+     * @testdox It should invalidate a partial URL
+     */
+    public function invalidatesPartialUrl()
+    {
+        self::expectException(ValidationException::class);
+
+        Validate::that()
+            ->isUrl('url', 'test.com/test.jpg')
             ->now();
     }
 

@@ -107,6 +107,36 @@ class Validate
     }
 
     /**
+     * @param string $property
+     * @param mixed  $value
+     *
+     * @return Validate
+     */
+    public function isStream($property, $value): self
+    {
+        $this->is($property, function () use ($value) {
+            return is_resource($value) && get_resource_type($value) === 'stream';
+        }, sprintf('Value must be a stream resource'));
+
+        return $this;
+    }
+
+    /**
+     * @param string $property
+     * @param mixed  $value
+     *
+     * @return Validate
+     */
+    public function isUrl($property, $value): self
+    {
+        $this->is($property, function () use ($value) {
+            return is_string($value) && filter_var($value, FILTER_VALIDATE_URL);
+        }, sprintf('Value must be a valid URL, beginning with a scheme'));
+
+        return $this;
+    }
+
+    /**
      * @throws ValidationException
      *
      * @return void
