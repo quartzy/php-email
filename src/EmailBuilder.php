@@ -146,14 +146,13 @@ class EmailBuilder
     }
 
     /**
-     * @param string      $file
-     * @param string|null $name
+     * @param Attachment $attachment
      *
      * @return EmailBuilder
      */
-    public function attach(string $file, ?string $name = null): self
+    public function attach(Attachment $attachment): self
     {
-        $this->attachments[] = new FileAttachment($file, $name);
+        $this->attachments[] = $attachment;
 
         return $this;
     }
