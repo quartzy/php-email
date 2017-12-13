@@ -40,7 +40,7 @@ class UrlAttachment implements Attachment
             ->now();
 
         $this->url  = $url;
-        $this->name = $name ?? basename($url);
+        $this->name = $name ?: urldecode(basename(parse_url($url, PHP_URL_PATH)));
     }
 
     /**
