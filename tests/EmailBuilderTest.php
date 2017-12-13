@@ -45,7 +45,7 @@ class EmailBuilderTest extends TestCase
             ->from('sender@test.com')
             ->withSubject('Hello from the Builder')
             ->withContent(new EmptyContent())
-            ->attach(self::$file)
+            ->attach(new FileAttachment(self::$file))
             ->bcc('blind@test.com')
             ->cc('copy@test.com')
             ->replyTo('reply.to@test.com')
