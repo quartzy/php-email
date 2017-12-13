@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.4.0 - 2017-12-13
+
+### Changed
+
+* Updated `EmailBuilder::attach` to accept an `Attachment` object to support more than just `FileAttachment`
+
 ## 0.3.2 - 2017-12-13
 
 ### Fixed
