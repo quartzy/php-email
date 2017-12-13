@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace PhpEmail;
 
-use PhpEmail\Attachment\FileAttachment;
-
 class EmailBuilder
 {
     /**
@@ -146,7 +144,7 @@ class EmailBuilder
     }
 
     /**
-     * @var Attachment $attachment
+     * @var Attachment
      *
      * @return EmailBuilder
      */
