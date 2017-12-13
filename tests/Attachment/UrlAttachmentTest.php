@@ -12,8 +12,11 @@ use PhpEmail\Test\TestCase;
  */
 class UrlAttachmentTest extends TestCase
 {
-    private const TEST_FILE = '/tmp/test.txt';
+    private const TEST_FILE = '/tmp/test test.txt';
 
+    /**
+     * @var int
+     */
     private static $pid;
 
     public static function setUpBeforeClass()
@@ -34,7 +37,9 @@ class UrlAttachmentTest extends TestCase
 
         // Kill the web server when the process ends
         register_shutdown_function(function () {
-            exec('kill ' . self::$pid);
+            if (posix_kill(self::$pid, 0)) {
+                exec('kill ' . self::$pid);
+            }
         });
     }
 
@@ -50,15 +55,15 @@ class UrlAttachmentTest extends TestCase
      */
     public function handlesRemoteFile()
     {
-        $attachment = new UrlAttachment('http://localhost:8777/test.txt');
+        $attachment = new UrlAttachment('http://localhost:8777/test%20test.txt?withquery=1');
 
         self::assertEquals('text/plain', $attachment->getContentType());
         self::assertEquals('QXR0YWNobWVudCBmaWxl', $attachment->getBase64Content());
         self::assertEquals('Attachment file', $attachment->getContent());
-        self::assertEquals('test.txt', $attachment->getName());
-        self::assertEquals('http://localhost:8777/test.txt', $attachment->getUrl());
+        self::assertEquals('test test.txt', $attachment->getName());
+        self::assertEquals('http://localhost:8777/test%20test.txt?withquery=1', $attachment->getUrl());
         self::assertEquals(
-            '{"url":"http:\/\/localhost:8777\/test.txt","name":"test.txt"}',
+            '{"url":"http:\/\/localhost:8777\/test%20test.txt?withquery=1","name":"test test.txt"}',
             $attachment->__toString()
         );
     }

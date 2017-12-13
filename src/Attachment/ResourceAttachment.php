@@ -36,7 +36,7 @@ class ResourceAttachment implements Attachment
             ->now();
 
         $this->resource = $resource;
-        $this->name     = $name ?? basename(stream_get_meta_data($this->resource)['uri']);
+        $this->name     = $name ?: $this->determineName();
     }
 
     /**
@@ -118,5 +118,19 @@ class ResourceAttachment implements Attachment
             'uri'  => stream_get_meta_data($this->resource)['uri'],
             'name' => $this->name,
         ]);
+    }
+
+    /**
+     * @return string
+     */
+    protected function determineName(): string
+    {
+        $metadata = stream_get_meta_data($this->resource);
+
+        if ($metadata['wrapper_type'] === 'http') {
+            return urldecode(basename(parse_url($metadata['uri'], PHP_URL_PATH)));
+        }
+
+        return basename($metadata['uri']);
     }
 }
