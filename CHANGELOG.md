@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.3.2 - 2017-12-13
+
+### Fixed
+
+* Corrected file name determination for `UrlAttachment`s and `ResourceAttachment`s
+
 ## 0.3.1 - 2017-12-12
 
 ### Added
