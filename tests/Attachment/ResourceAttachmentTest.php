@@ -100,7 +100,7 @@ class ResourceAttachmentTest extends TestCase
 
         // Kill the web server when the process ends
         register_shutdown_function(function () {
-            if (posix_kill($this->pid, 0)){
+            if (posix_kill($this->pid, 0)) {
                 exec('kill ' . $this->pid);
             }
         });
