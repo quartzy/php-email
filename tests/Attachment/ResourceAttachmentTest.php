@@ -15,7 +15,9 @@ class ResourceAttachmentTest extends TestCase
     /**
      * @var string
      */
-    private static $file = '/tmp/attachment_test.txt';
+    private static $file = '/tmp/attachment test.txt';
+
+    private $pid;
 
     /**
      * @var resource
@@ -36,13 +38,6 @@ class ResourceAttachmentTest extends TestCase
         unlink(self::$file);
     }
 
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->resource = fopen(self::$file, 'r');
-    }
-
     public function tearDown()
     {
         parent::tearDown();
@@ -55,16 +50,59 @@ class ResourceAttachmentTest extends TestCase
      */
     public function handlesLocalFile()
     {
+        $this->resource = fopen(self::$file, 'r');
+
         $attachment = new ResourceAttachment($this->resource);
 
         self::assertEquals('text/plain', $attachment->getContentType());
         self::assertEquals('QXR0YWNobWVudCBmaWxl', $attachment->getBase64Content());
         self::assertEquals('Attachment file', $attachment->getContent());
-        self::assertEquals('attachment_test.txt', $attachment->getName());
+        self::assertEquals('attachment test.txt', $attachment->getName());
         self::assertEquals($this->resource, $attachment->getResource());
         self::assertEquals(
-            '{"uri":"\/tmp\/attachment_test.txt","name":"attachment_test.txt"}',
+            '{"uri":"\/tmp\/attachment test.txt","name":"attachment test.txt"}',
             $attachment->__toString()
         );
+    }
+
+    /**
+     * @testdox It should create an attachment using a file on a remote server
+     */
+    public function handlesRemoteFile()
+    {
+        $this->setupServer();
+        $this->resource = fopen('http://localhost:8777/attachment%20test.txt?withquery=1', 'r');
+
+        $attachment = new ResourceAttachment($this->resource);
+
+        self::assertEquals('text/plain', $attachment->getContentType());
+        self::assertEquals('QXR0YWNobWVudCBmaWxl', $attachment->getBase64Content());
+        self::assertEquals('Attachment file', $attachment->getContent());
+        self::assertEquals('attachment test.txt', $attachment->getName());
+        self::assertEquals($this->resource, $attachment->getResource());
+        self::assertEquals(
+            '{"uri":"http:\/\/localhost:8777\/attachment%20test.txt?withquery=1","name":"attachment test.txt"}',
+            $attachment->__toString()
+        );
+    }
+
+    private function setupServer()
+    {
+        $command = 'php -S localhost:8777 -t /tmp >/dev/null 2>&1 & echo $!';
+
+        // Execute the command and store the process ID
+        $output = [];
+        exec($command, $output);
+        $this->pid = (int) $output[0];
+
+        // Give the server time to start
+        sleep(1);
+
+        // Kill the web server when the process ends
+        register_shutdown_function(function () {
+            if (posix_kill($this->pid, 0)){
+                exec('kill ' . $this->pid);
+            }
+        });
     }
 }
