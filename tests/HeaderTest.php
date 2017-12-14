@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 namespace PhpEmail\Test;
+
 use PhpEmail\Header;
 
 /**
