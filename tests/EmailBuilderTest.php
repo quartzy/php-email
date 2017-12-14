@@ -8,6 +8,7 @@ use PhpEmail\Address;
 use PhpEmail\Attachment\FileAttachment;
 use PhpEmail\Content\EmptyContent;
 use PhpEmail\EmailBuilder;
+use PhpEmail\Header;
 
 /**
  * @covers \PhpEmail\EmailBuilder
@@ -49,6 +50,7 @@ class EmailBuilderTest extends TestCase
             ->bcc('blind@test.com')
             ->cc('copy@test.com')
             ->replyTo('reply.to@test.com')
+            ->addHeader('X-Test', 'test')
             ->build();
 
         $expectedRecipients = [
@@ -64,5 +66,6 @@ class EmailBuilderTest extends TestCase
         self::assertEquals([new Address('blind@test.com')], $email->getBccRecipients());
         self::assertEquals([new Address('copy@test.com')], $email->getCcRecipients());
         self::assertEquals([new Address('reply.to@test.com')], $email->getReplyTos());
+        self::assertEquals([new Header('X-Test', 'test')], $email->getHeaders());
     }
 }

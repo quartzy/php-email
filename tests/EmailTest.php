@@ -9,6 +9,7 @@ use PhpEmail\Attachment\FileAttachment;
 use PhpEmail\Content\EmptyContent;
 use PhpEmail\Content\SimpleContent;
 use PhpEmail\Email;
+use PhpEmail\Header;
 
 /**
  * @covers \PhpEmail\Email
@@ -57,6 +58,7 @@ class EmailTest extends TestCase
         $replyTo        = new Address('reply.to@test.com');
         $content        = new EmptyContent();
         $attachment     = new FileAttachment(self::$file);
+        $header         = new Header('X-Test', 'test');
 
         $email
             ->addToRecipients($secondReceiver)
@@ -66,7 +68,8 @@ class EmailTest extends TestCase
             ->addReplyTos($replyTo)
             ->setSubject('Updated Subject')
             ->setContent($content)
-            ->addAttachments($attachment);
+            ->addAttachments($attachment)
+            ->addHeaders($header);
 
         self::assertContains($secondReceiver, $email->getToRecipients());
         self::assertContains($cc, $email->getCcRecipients());
@@ -75,5 +78,6 @@ class EmailTest extends TestCase
         self::assertContains($replyTo, $email->getReplyTos());
         self::assertSame($content, $email->getContent());
         self::assertContains($attachment, $email->getAttachments());
+        self::assertEquals([$header], $email->getHeaders());
     }
 }

@@ -10,6 +10,7 @@ disabled:
   - unalign_equals
   - concat_without_spaces
   - empty_return
+  - self_accessor
 
 finder:
   name:
