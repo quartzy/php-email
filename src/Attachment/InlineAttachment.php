@@ -97,7 +97,7 @@ class InlineAttachment implements Attachment
     public function __toString(): string
     {
         return json_encode([
-            'cid' => $this->cid,
+            'cid'        => $this->cid,
             'attachment' => $this->attachment->__toString(),
         ]);
     }

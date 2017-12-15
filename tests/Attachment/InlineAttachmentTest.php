@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace PhpEmail\Test\Attachment;
 
-use PhpEmail\Attachment\InlineAttachment;
 use PhpEmail\Attachment\FileAttachment;
+use PhpEmail\Attachment\InlineAttachment;
 use PhpEmail\Test\TestCase;
 
 /**
