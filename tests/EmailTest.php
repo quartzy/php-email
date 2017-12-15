@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace PhpEmail\Test;
 
 use PhpEmail\Address;
+use PhpEmail\Attachment\InlineAttachment;
 use PhpEmail\Attachment\FileAttachment;
 use PhpEmail\Content\EmptyContent;
 use PhpEmail\Content\SimpleContent;
@@ -57,6 +58,7 @@ class EmailTest extends TestCase
         $replyTo        = new Address('reply.to@test.com');
         $content        = new EmptyContent();
         $attachment     = new FileAttachment(self::$file);
+        $inline         = new InlineAttachment($attachment, 'cid:test');
 
         $email
             ->addToRecipients($secondReceiver)
@@ -66,7 +68,8 @@ class EmailTest extends TestCase
             ->addReplyTos($replyTo)
             ->setSubject('Updated Subject')
             ->setContent($content)
-            ->addAttachments($attachment);
+            ->addAttachments($attachment)
+            ->addEmbedded($inline);
 
         self::assertContains($secondReceiver, $email->getToRecipients());
         self::assertContains($cc, $email->getCcRecipients());
@@ -75,5 +78,6 @@ class EmailTest extends TestCase
         self::assertContains($replyTo, $email->getReplyTos());
         self::assertSame($content, $email->getContent());
         self::assertContains($attachment, $email->getAttachments());
+        self::assertContains($inline, $email->getEmbedded());
     }
 }

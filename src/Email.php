@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace PhpEmail;
 
+use PhpEmail\Attachment\InlineAttachment;
+
 class Email
 {
     /**
@@ -45,6 +47,11 @@ class Email
      * @var array|Attachment[]
      */
     private $attachments = [];
+
+    /**
+     * @var array|Attachment[]
+     */
+    private $embedded = [];
 
     /**
      * @param Content $content
@@ -298,6 +305,38 @@ class Email
     public function addAttachments(Attachment ...$attachments): self
     {
         $this->attachments = array_values(array_unique(array_merge($this->attachments, $attachments)));
+
+        return $this;
+    }
+
+    /**
+     * @return InlineAttachment[]
+     */
+    public function getEmbedded(): array
+    {
+        return $this->embedded;
+    }
+
+    /**
+     * @param InlineAttachment[] $embedded
+     *
+     * @return Email
+     */
+    public function setEmbedded(InlineAttachment ...$embedded): self
+    {
+        $this->embedded = $embedded;
+
+        return $this;
+    }
+
+    /**
+     * @param InlineAttachment[] $embedded
+     *
+     * @return Email
+     */
+    public function addEmbedded(InlineAttachment ...$embedded): self
+    {
+        $this->embedded = array_values(array_unique(array_merge($this->embedded, $embedded)));
 
         return $this;
     }

@@ -29,6 +29,10 @@ class ResourceAttachment implements Attachment
      */
     private $contentType = null;
 
+    /**
+     * @param             $resource
+     * @param null|string $name
+     */
     public function __construct($resource, ?string $name = null)
     {
         Validate::that()

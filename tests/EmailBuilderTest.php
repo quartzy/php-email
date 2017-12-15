@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace PhpEmail\Test;
 
 use PhpEmail\Address;
+use PhpEmail\Attachment\InlineAttachment;
 use PhpEmail\Attachment\FileAttachment;
 use PhpEmail\Content\EmptyContent;
 use PhpEmail\EmailBuilder;
@@ -46,6 +47,7 @@ class EmailBuilderTest extends TestCase
             ->withSubject('Hello from the Builder')
             ->withContent(new EmptyContent())
             ->attach(new FileAttachment(self::$file))
+            ->embed(new FileAttachment(self::$file), 'cid:test')
             ->bcc('blind@test.com')
             ->cc('copy@test.com')
             ->replyTo('reply.to@test.com')
@@ -61,6 +63,7 @@ class EmailBuilderTest extends TestCase
         self::assertEquals('Hello from the Builder', $email->getSubject());
         self::assertEquals(new EmptyContent(), $email->getContent());
         self::assertEquals([new FileAttachment(self::$file)], $email->getAttachments());
+        self::assertEquals([new InlineAttachment(new FileAttachment(self::$file), 'cid:test')], $email->getEmbedded());
         self::assertEquals([new Address('blind@test.com')], $email->getBccRecipients());
         self::assertEquals([new Address('copy@test.com')], $email->getCcRecipients());
         self::assertEquals([new Address('reply.to@test.com')], $email->getReplyTos());
