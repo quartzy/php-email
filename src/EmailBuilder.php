@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace PhpEmail;
 
+use PhpEmail\Attachment\InlineAttachment;
+
 class EmailBuilder
 {
     /**
@@ -45,6 +47,11 @@ class EmailBuilder
      * @var array|Attachment[]
      */
     private $attachments = [];
+
+    /**
+     * @var array|Attachment[]
+     */
+    private $embedded = [];
 
     /**
      * @return EmailBuilder
@@ -156,6 +163,19 @@ class EmailBuilder
     }
 
     /**
+     * @param Attachment  $attachment
+     * @param string|null $cid
+     *
+     * @return EmailBuilder
+     */
+    public function embed(Attachment $attachment, string $cid = null): self
+    {
+        $this->embedded[] = new InlineAttachment($attachment, $cid);
+
+        return $this;
+    }
+
+    /**
      * @return Email
      */
     public function build(): Email
@@ -171,7 +191,8 @@ class EmailBuilder
             ->setCcRecipients(...$this->ccRecipients)
             ->setBccRecipients(...$this->bccRecipients)
             ->setReplyTos(...$this->replyTos)
-            ->setAttachments(...$this->attachments);
+            ->setAttachments(...$this->attachments)
+            ->setEmbedded(...$this->embedded);
 
         return $email;
     }

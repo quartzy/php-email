@@ -33,6 +33,10 @@ class UrlAttachment implements Attachment
      */
     private $contentType = null;
 
+    /**
+     * @param string      $url
+     * @param null|string $name
+     */
     public function __construct(string $url, ?string $name = null)
     {
         Validate::that()
