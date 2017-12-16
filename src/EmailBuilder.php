@@ -47,6 +47,11 @@ class EmailBuilder
     private $attachments = [];
 
     /**
+     * @var Header[]
+     */
+    private $headers = [];
+
+    /**
      * @return EmailBuilder
      */
     public static function email(): self
@@ -156,6 +161,19 @@ class EmailBuilder
     }
 
     /**
+     * @param string $field
+     * @param string $value
+     *
+     * @return EmailBuilder
+     */
+    public function addHeader(string $field, string $value): self
+    {
+        $this->headers[] = new Header($field, $value);
+
+        return $this;
+    }
+
+    /**
      * @return Email
      */
     public function build(): Email
@@ -171,7 +189,8 @@ class EmailBuilder
             ->setCcRecipients(...$this->ccRecipients)
             ->setBccRecipients(...$this->bccRecipients)
             ->setReplyTos(...$this->replyTos)
-            ->setAttachments(...$this->attachments);
+            ->setAttachments(...$this->attachments)
+            ->setHeaders(...$this->headers);
 
         return $email;
     }

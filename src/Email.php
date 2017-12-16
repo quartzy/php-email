@@ -47,6 +47,11 @@ class Email
     private $attachments = [];
 
     /**
+     * @var Header[]
+     */
+    private $headers = [];
+
+    /**
      * @param Content $content
      * @param Address $from
      * @param array   $toRecipients
@@ -298,6 +303,40 @@ class Email
     public function addAttachments(Attachment ...$attachments): self
     {
         $this->attachments = array_values(array_unique(array_merge($this->attachments, $attachments)));
+
+        return $this;
+    }
+
+    /**
+     * @return Header[]
+     */
+    public function getHeaders(): array
+    {
+        return array_values($this->headers);
+    }
+
+    /**
+     * @param Header[] $headers
+     *
+     * @return Email
+     */
+    public function setHeaders(Header ...$headers): self
+    {
+        $this->headers = [];
+
+        return $this->addHeaders(...$headers);
+    }
+
+    /**
+     * @param Header[] $headers
+     *
+     * @return Email
+     */
+    public function addHeaders(Header ...$headers): self
+    {
+        foreach ($headers as $header) {
+            $this->headers[$header->getField()] = $header;
+        }
 
         return $this;
     }
