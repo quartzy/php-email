@@ -39,7 +39,7 @@ class InlineAttachmentTest extends TestCase
     {
         $attachment = new InlineAttachment(new FileAttachment(self::$file));
 
-        self::assertEquals('attachment_test.txt', $attachment->getCid());
+        self::assertEquals('attachment_test.txt', $attachment->getContentId());
     }
 
     /**
@@ -49,7 +49,7 @@ class InlineAttachmentTest extends TestCase
     {
         $attachment = new InlineAttachment(new FileAttachment(self::$file), 'cid:test');
 
-        self::assertEquals('cid:test', $attachment->getCid());
+        self::assertEquals('cid:test', $attachment->getContentId());
     }
 
     /**
@@ -65,7 +65,7 @@ class InlineAttachmentTest extends TestCase
         self::assertEquals('attachment_test.txt', $attachment->getName());
         self::assertEquals('/tmp/attachment_test.txt', $attachment->getAttachment()->getFile());
         self::assertEquals(
-            '{"cid":"cid:test","attachment":"{\"file\":\"\\\\\/tmp\\\\\/attachment_test.txt\",\"name\":\"attachment_test.txt\"}"}',
+            '{"contentId":"cid:test","attachment":"{\"file\":\"\\\\\/tmp\\\\\/attachment_test.txt\",\"name\":\"attachment_test.txt\"}"}',
             $attachment->__toString()
         );
     }

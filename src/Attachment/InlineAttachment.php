@@ -20,16 +20,16 @@ class InlineAttachment implements Attachment
     /**
      * @var string
      */
-    private $cid;
+    private $contentId;
 
     /**
      * @param Attachment  $attachment
-     * @param string|null $cid
+     * @param string|null $contentId
      */
-    public function __construct(Attachment $attachment, ?string $cid = null)
+    public function __construct(Attachment $attachment, ?string $contentId = null)
     {
         $this->attachment = $attachment;
-        $this->cid        = $cid ?: $attachment->getName();
+        $this->contentId  = $contentId ?: $attachment->getName();
     }
 
     /**
@@ -76,9 +76,9 @@ class InlineAttachment implements Attachment
     /**
      * @return string
      */
-    public function getCid(): string
+    public function getContentId(): string
     {
-        return $this->cid;
+        return $this->contentId;
     }
 
     /**
@@ -97,7 +97,7 @@ class InlineAttachment implements Attachment
     public function __toString(): string
     {
         return json_encode([
-            'cid' => $this->cid,
+            'contentId'  => $this->contentId,
             'attachment' => $this->attachment->__toString(),
         ]);
     }
