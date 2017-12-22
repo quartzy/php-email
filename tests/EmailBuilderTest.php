@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace PhpEmail\Test;
 
 use PhpEmail\Address;
-use PhpEmail\Attachment\InlineAttachment;
 use PhpEmail\Attachment\FileAttachment;
+use PhpEmail\Attachment\InlineAttachment;
 use PhpEmail\Content\EmptyContent;
 use PhpEmail\EmailBuilder;
 
