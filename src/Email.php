@@ -324,7 +324,7 @@ class Email
      */
     public function setEmbedded(InlineAttachment ...$embedded): self
     {
-        $this->embedded = $embedded;
+        $this->embedded = array_values(array_unique($embedded));
 
         return $this;
     }
