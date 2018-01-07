@@ -21,11 +21,10 @@ class FileAttachment extends AttachmentWithHeaders
 
     /**
      * @param string      $file
-     * @param null|string $name If null, the class will determine a name for the attachment based on the file path.
+     * @param null|string $name        If null, the class will determine a name for the attachment based on the file path.
      * @param null|string $contentId
      * @param null|string $contentType
      * @param string      $charset
-     *
      */
     public function __construct(
         string $file,

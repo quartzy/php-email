@@ -6,7 +6,6 @@ namespace PhpEmail\Attachment;
 
 use PhpEmail\Attachment;
 use PhpEmail\Validate;
-use RuntimeException;
 
 /**
  * Attach a file by URL. This requires that the `allow_url_fopen` be enabled.
@@ -25,7 +24,7 @@ class UrlAttachment extends AttachmentWithHeaders
 
     /**
      * @param string      $url
-     * @param null|string $name    If null, the class will determine a name for the attachment based on the URL.
+     * @param null|string $name        If null, the class will determine a name for the attachment based on the URL.
      * @param null|string $contentId
      * @param null|string $contentType
      * @param string      $charset

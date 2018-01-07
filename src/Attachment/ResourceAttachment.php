@@ -21,7 +21,7 @@ class ResourceAttachment extends AttachmentWithHeaders
 
     /**
      * @param             $resource
-     * @param null|string $name If null, the class will determine a name for the attachment based on the resource.
+     * @param null|string $name        If null, the class will determine a name for the attachment based on the resource.
      * @param null|string $contentId
      * @param null|string $contentType
      * @param string      $charset

@@ -20,7 +20,7 @@ class Message
 
     public function __construct(string $body, string $charset = self::DEFAULT_CHARSET)
     {
-        $this->body = $body;
+        $this->body    = $body;
         $this->charset = $charset;
     }
 
