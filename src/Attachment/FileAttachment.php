@@ -7,7 +7,7 @@ namespace PhpEmail\Attachment;
 use PhpEmail\Attachment;
 use PhpEmail\Validate;
 
-class FileAttachment implements Attachment
+class FileAttachment extends AttachmentWithHeaders
 {
     /**
      * @var string
@@ -15,24 +15,39 @@ class FileAttachment implements Attachment
     private $file;
 
     /**
-     * @var string
-     */
-    private $name;
-
-    /**
      * @param string      $file
-     * @param string|null $name
+     * @param null|string $name If null, the class will determine a name for the attachment based on the file path.
+     * @param null|string $contentId
+     * @param null|string $contentType
+     * @param string      $charset
      *
-     * @throws \PhpEmail\ValidationException
      */
-    public function __construct(string $file, ?string $name = null)
-    {
+    public function __construct(
+        string $file,
+        ?string $name = null,
+        ?string $contentId = null,
+        ?string $contentType = null,
+        string $charset = self::DEFAULT_CHARSET
+    ) {
         Validate::that()
             ->isFile('file', $file)
             ->now();
 
-        $this->file = $file;
-        $this->name = $name ?: basename($file);
+        $this->file        = $file;
+        $this->name        = $name ?: basename($file);
+        $this->charset     = $charset;
+        $this->contentId   = $contentId;
+        $this->contentType = $contentType;
+    }
+
+    public static function fromFile(
+        string $file,
+        ?string $name = null,
+        ?string $contentId = null,
+        ?string $contentType = null,
+        string $charset = self::DEFAULT_CHARSET
+    ): FileAttachment {
+        return new self($file, $name, $contentId, $contentType, $charset);
     }
 
     /**
@@ -59,20 +74,9 @@ class FileAttachment implements Attachment
         return base64_encode($this->getContent());
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getContentType(): string
+    protected function determineContentType(): string
     {
         return mime_content_type($this->file);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getName(): string
-    {
-        return $this->name;
     }
 
     /**
@@ -81,8 +85,9 @@ class FileAttachment implements Attachment
     public function __toString(): string
     {
         return json_encode([
-            'file' => $this->file,
-            'name' => $this->name,
+            'file'      => $this->file,
+            'name'      => $this->name,
+            'contentId' => $this->contentId,
         ]);
     }
 }
