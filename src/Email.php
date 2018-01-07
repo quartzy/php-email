@@ -47,6 +47,11 @@ class Email
     private $attachments = [];
 
     /**
+     * @var Attachment[]
+     */
+    private $embedded = [];
+
+    /**
      * @var Header[]
      */
     private $headers = [];
@@ -305,6 +310,66 @@ class Email
         $this->attachments = array_values(array_unique(array_merge($this->attachments, $attachments)));
 
         return $this;
+    }
+
+    /**
+     * Embed an attachment into the email, setting the Content ID.
+     *
+     * @param Attachment  $attachment
+     * @param null|string $contentId
+     *
+     * @return Email
+     */
+    public function embed(Attachment $attachment, ?string $contentId = null): self
+    {
+        $contentId = $contentId ?? $attachment->getContentId() ?? $attachment->getName();
+
+        $this->embedded[$attachment->getContentId()] = $attachment->setContentId($contentId ?? $attachment->getName());
+
+        return $this;
+    }
+
+    /**
+     * Set the embedded attachments for the email.
+     *
+     * This function assumes that all attachments already have a Content ID set, or it will use the default value. This
+     * function will remove all currently embedded attachments.
+     *
+     * @param Attachment[] ...$attachments
+     *
+     * @return Email
+     */
+    public function setEmbedded(Attachment ...$attachments): self
+    {
+        $this->embedded = [];
+
+        return $this->addEmbedded(...$attachments);
+    }
+
+    /**
+     * Add a collection of attachments to the email.
+     *
+     * This function assumes that all attachments already have a Content ID set, or it will use the default value.
+     *
+     * @param Attachment[] ...$attachments
+     *
+     * @return Email
+     */
+    public function addEmbedded(Attachment ...$attachments): self
+    {
+        foreach ($attachments as $attachment) {
+            $this->embed($attachment);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getEmbedded(): array
+    {
+        return array_values($this->embedded);
     }
 
     /**

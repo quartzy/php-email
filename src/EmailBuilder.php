@@ -47,6 +47,11 @@ class EmailBuilder
     private $attachments = [];
 
     /**
+     * @var Attachment[]
+     */
+    private $embedded = [];
+
+    /**
      * @var Header[]
      */
     private $headers = [];
@@ -160,6 +165,15 @@ class EmailBuilder
         return $this;
     }
 
+    public function embed(Attachment $attachment, ?string $contentId = null): self
+    {
+        $contentId = $contentId ?? $attachment->getContentId() ?? $attachment->getName();
+
+        $this->embedded[$contentId] = $attachment->setContentId($contentId);
+
+        return $this;
+    }
+
     /**
      * @param string $field
      * @param string $value
@@ -190,6 +204,7 @@ class EmailBuilder
             ->setBccRecipients(...$this->bccRecipients)
             ->setReplyTos(...$this->replyTos)
             ->setAttachments(...$this->attachments)
+            ->setEmbedded(...array_values($this->embedded))
             ->setHeaders(...$this->headers);
 
         return $email;

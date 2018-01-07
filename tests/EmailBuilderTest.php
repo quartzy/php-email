@@ -46,7 +46,8 @@ class EmailBuilderTest extends TestCase
             ->from('sender@test.com')
             ->withSubject('Hello from the Builder')
             ->withContent(new EmptyContent())
-            ->attach(new FileAttachment(self::$file))
+            ->attach(FileAttachment::fromFile(self::$file))
+            ->embed(FileAttachment::fromFile(self::$file), 'testid')
             ->bcc('blind@test.com')
             ->cc('copy@test.com')
             ->replyTo('reply.to@test.com')
@@ -63,6 +64,7 @@ class EmailBuilderTest extends TestCase
         self::assertEquals('Hello from the Builder', $email->getSubject());
         self::assertEquals(new EmptyContent(), $email->getContent());
         self::assertEquals([new FileAttachment(self::$file)], $email->getAttachments());
+        self::assertEquals([FileAttachment::fromFile(self::$file)->setContentId('testid')], $email->getEmbedded());
         self::assertEquals([new Address('blind@test.com')], $email->getBccRecipients());
         self::assertEquals([new Address('copy@test.com')], $email->getCcRecipients());
         self::assertEquals([new Address('reply.to@test.com')], $email->getReplyTos());
