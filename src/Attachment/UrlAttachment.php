@@ -47,6 +47,17 @@ class UrlAttachment extends AttachmentWithHeaders
         $this->charset     = self::DEFAULT_CHARSET;
     }
 
+    /**
+     * A static constructor for the UrlAttachment constructor.
+     *
+     * @param string      $url
+     * @param null|string $name        If null, the class will determine a name for the attachment based on the URL.
+     * @param null|string $contentId
+     * @param null|string $contentType
+     * @param string      $charset
+     *
+     * @return UrlAttachment
+     */
     public static function fromUrl(
         string $url,
         ?string $name = null,
