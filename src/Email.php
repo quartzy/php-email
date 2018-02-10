@@ -324,7 +324,7 @@ class Email
     {
         $contentId = $contentId ?? $attachment->getContentId() ?? $attachment->getName();
 
-        $this->embedded[$attachment->getContentId()] = $attachment->setContentId($contentId ?? $attachment->getName());
+        $this->embedded[$attachment->getContentId()] = $attachment->setContentId($contentId);
 
         return $this;
     }
