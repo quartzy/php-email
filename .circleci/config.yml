@@ -78,7 +78,7 @@ jobs:
   php72:
     working_directory: /home/circleci/php-email
     docker:
-      - image: circleci/php:7.1-cli-node-browsers
+      - image: circleci/php:7.2-cli-node-browsers
     steps:
       - *attach_workspace
       - *load_code

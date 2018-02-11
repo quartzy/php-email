@@ -51,7 +51,7 @@ class ResourceAttachmentTest extends TestCase
     /**
      * @testdox It should create an attachment using a file on the disk
      */
-    public function handlesLocalFile()
+    public function testHandlesLocalFile()
     {
         $this->resource = fopen(self::$file, 'r');
 
@@ -71,7 +71,7 @@ class ResourceAttachmentTest extends TestCase
     /**
      * @testdox It should create an attachment using a file on a remote server
      */
-    public function handlesRemoteFile()
+    public function testHandlesRemoteFile()
     {
         $this->setupServer();
         $this->resource = fopen('http://localhost:8777/attachment%20test.txt?withquery=1', 'r');

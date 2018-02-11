@@ -15,7 +15,7 @@ class SimpleContentTest extends TestCase
     /**
      * @testdox It should allow for content made up of text and html
      */
-    public function containsTextAndHtml()
+    public function testContainsTextAndHtml()
     {
         $content = new SimpleContent('<b>Text</b>', 'Text');
 
@@ -26,7 +26,7 @@ class SimpleContentTest extends TestCase
     /**
      * @testdox It should support building text-only content
      */
-    public function containsTextOnly()
+    public function testContainsTextOnly()
     {
         $content = SimpleContent::text('Text');
 
@@ -37,7 +37,7 @@ class SimpleContentTest extends TestCase
     /**
      * @testdox It should support building html-only content
      */
-    public function containsHtmlOnly()
+    public function testContainsHtmlOnly()
     {
         $content = SimpleContent::html('<b>Text</b>');
 

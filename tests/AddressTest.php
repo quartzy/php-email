@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace PhpEmail\Test;
 
 use PhpEmail\Address;
+use PhpEmail\ValidationException;
 
 class AddressTest extends TestCase
 {
@@ -26,7 +27,7 @@ class AddressTest extends TestCase
      * @testdox It should create a recipient and convert it to a string
      * @dataProvider recipients
      */
-    public function hasToString($email, $name)
+    public function testHasToString($email, $name)
     {
         $recipient = new Address($email, $name);
 
@@ -50,10 +51,11 @@ class AddressTest extends TestCase
     /**
      * @testdox It should validate that the email is acceptable
      * @dataProvider addresses
-     * @expectedException \PhpEmail\ValidationException
      */
-    public function validatesEmail($email)
+    public function testValidatesEmail($email)
     {
+        self::expectException(ValidationException::class);
+
         new Address($email);
     }
 
@@ -70,7 +72,7 @@ class AddressTest extends TestCase
      * @testdox It should parse a valid RFC address string to an Address
      * @dataProvider addressStrings
      */
-    public function parsesRfcAddressString($str, $expected)
+    public function testParsesRfcAddressString($str, $expected)
     {
         self::assertEquals(Address::fromRfc2822($str), $expected);
     }
@@ -86,11 +88,12 @@ class AddressTest extends TestCase
 
     /**
      * @testdox It should throw a validation exception if the string is not parsable to an Address
-     * @expectedException \PhpEmail\ValidationException
      * @dataProvider invalidAddressStrings
      */
-    public function handlesInvalidRfcAddressString($str)
+    public function testHandlesInvalidRfcAddressString($str)
     {
+        self::expectException(ValidationException::class);
+
         Address::fromRfc2822($str);
     }
 
@@ -98,7 +101,7 @@ class AddressTest extends TestCase
      * @testdox It should parse a string into an Address
      * @dataProvider addressStrings
      */
-    public function parsesStringToAddress($str, $expected)
+    public function testParsesStringToAddress($str, $expected)
     {
         self::assertEquals(Address::fromString($str), $expected);
     }
