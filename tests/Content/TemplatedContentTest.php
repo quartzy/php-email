@@ -15,7 +15,7 @@ class TemplatedContentTest extends TestCase
     /**
      * @testdox It should support content with a template ID and data
      */
-    public function supportTemplateContent()
+    public function testSupportTemplateContent()
     {
         $content = new TemplatedContent('1234', ['key' => 'value']);
 

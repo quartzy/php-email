@@ -53,7 +53,7 @@ class UrlAttachmentTest extends TestCase
     /**
      * @testdox It should create an attachment using a URL
      */
-    public function handlesRemoteFile()
+    public function testHandlesRemoteFile()
     {
         $attachment = new UrlAttachment('http://localhost:8777/test%20test.txt?withquery=1');
 
