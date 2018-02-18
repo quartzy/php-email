@@ -35,7 +35,7 @@ class FileAttachmentTest extends TestCase
     /**
      * @testdox It should create an attachment using a file on the disk
      */
-    public function handlesLocalFile()
+    public function testHandlesLocalFile()
     {
         $attachment = new FileAttachment(self::$file);
 

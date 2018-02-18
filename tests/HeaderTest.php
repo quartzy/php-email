@@ -14,11 +14,11 @@ class HeaderTest extends TestCase
     /**
      * @testdox It should create a header
      */
-    public function createsHeader()
+    public function testCreatesHeader()
     {
         $header = new Header('X-Test', 'test');
 
-        self::assertEquals('X-Test', $header->getField());
+        self::assertSame('X-Test', $header->getField());
         self::assertEquals('test', $header->getValue());
         self::assertEquals('X-Test: test', $header->__toString());
         self::assertEquals('X-Test: test', $header->toRfc2822());
@@ -27,7 +27,7 @@ class HeaderTest extends TestCase
     /**
      * @testdox It should support creating a header from a string
      */
-    public function createsFromString()
+    public function testCreatesFromString()
     {
         $rfcHeader = Header::fromRfc2822('X-Test: test');
         $header    = Header::fromString('X-Test: test');

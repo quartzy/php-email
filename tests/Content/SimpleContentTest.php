@@ -16,7 +16,7 @@ class SimpleContentTest extends TestCase
     /**
      * @testdox It should add text to a HTML message
      */
-    public function addsTextToHtml()
+    public function testAddsTextToHtml()
     {
         $content = SimpleContent::html('<b>Text</b>')
             ->addText('Text');
@@ -30,7 +30,7 @@ class SimpleContentTest extends TestCase
     /**
      * @testdox It should add HTML to a text message
      */
-    public function addsHtmlToText()
+    public function testAddsHtmlToText()
     {
         $content = SimpleContent::text('Text')
             ->addHtml('<b>Text</b>');
@@ -44,7 +44,7 @@ class SimpleContentTest extends TestCase
     /**
      * @testdox It should support building text-only content with headers
      */
-    public function containsTextOnly()
+    public function testContainsTextOnly()
     {
         $content = SimpleContent::text('Text', 'utf-16');
 
@@ -56,7 +56,7 @@ class SimpleContentTest extends TestCase
     /**
      * @testdox It should support building html-only content with headers
      */
-    public function containsHtmlOnly()
+    public function testContainsHtmlOnly()
     {
         $content = SimpleContent::html('<b>Text</b>', 'utf-16');
 
