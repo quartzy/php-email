@@ -9,6 +9,7 @@ use PhpEmail\Test\TestCase;
 
 /**
  * @covers \PhpEmail\Attachment\UrlAttachment
+ * @covers \PhpEmail\Attachment\AttachmentWithHeaders
  */
 class UrlAttachmentTest extends TestCase
 {
@@ -53,17 +54,43 @@ class UrlAttachmentTest extends TestCase
     /**
      * @testdox It should create an attachment using a URL
      */
-    public function testHandlesRemoteFile()
+    public function testHandlesRemoteFileWithDefaults()
     {
         $attachment = new UrlAttachment('http://localhost:8777/test%20test.txt?withquery=1');
 
         self::assertEquals('text/plain', $attachment->getContentType());
+        self::assertEquals('utf-8', $attachment->getCharset());
+        self::assertEquals(null, $attachment->getContentId());
         self::assertEquals('QXR0YWNobWVudCBmaWxl', $attachment->getBase64Content());
         self::assertEquals('Attachment file', $attachment->getContent());
         self::assertEquals('test test.txt', $attachment->getName());
         self::assertEquals('http://localhost:8777/test%20test.txt?withquery=1', $attachment->getUrl());
         self::assertEquals(
-            '{"url":"http:\/\/localhost:8777\/test%20test.txt?withquery=1","name":"test test.txt"}',
+            '{"url":"http:\/\/localhost:8777\/test%20test.txt?withquery=1","name":"test test.txt","contentId":null}',
+            $attachment->__toString()
+        );
+    }
+
+    /**
+     * @testdox It should create an attachment using a URL and define headers
+     */
+    public function testHandlesRemoteFileWithHeaders()
+    {
+        $attachment = UrlAttachment::fromUrl('http://localhost:8777/test%20test.txt?withquery=1')
+            ->setContentType('text/json')
+            ->setContentId('testid')
+            ->setName('testfile.txt')
+            ->setCharset('utf-16');
+
+        self::assertEquals('text/json', $attachment->getContentType());
+        self::assertEquals('utf-16', $attachment->getCharset());
+        self::assertEquals('testid', $attachment->getContentId());
+        self::assertEquals('QXR0YWNobWVudCBmaWxl', $attachment->getBase64Content());
+        self::assertEquals('Attachment file', $attachment->getContent());
+        self::assertEquals('testfile.txt', $attachment->getName());
+        self::assertEquals('http://localhost:8777/test%20test.txt?withquery=1', $attachment->getUrl());
+        self::assertEquals(
+            '{"url":"http:\/\/localhost:8777\/test%20test.txt?withquery=1","name":"testfile.txt","contentId":"testid"}',
             $attachment->__toString()
         );
     }

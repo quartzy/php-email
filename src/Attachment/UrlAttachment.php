@@ -6,12 +6,11 @@ namespace PhpEmail\Attachment;
 
 use PhpEmail\Attachment;
 use PhpEmail\Validate;
-use RuntimeException;
 
 /**
  * Attach a file by URL. This requires that the `allow_url_fopen` be enabled.
  */
-class UrlAttachment implements Attachment
+class UrlAttachment extends AttachmentWithHeaders
 {
     /**
      * @var string
@@ -19,28 +18,54 @@ class UrlAttachment implements Attachment
     private $url;
 
     /**
-     * @var string
-     */
-    private $name;
-
-    /**
      * @var string|null
      */
     private $content = null;
 
     /**
-     * @var string|null
+     * @param string      $url
+     * @param null|string $name        If null, the class will determine a name for the attachment based on the URL.
+     * @param null|string $contentId
+     * @param null|string $contentType
+     * @param string      $charset
      */
-    private $contentType = null;
-
-    public function __construct(string $url, ?string $name = null)
-    {
+    public function __construct(
+        string $url,
+        ?string $name = null,
+        ?string $contentId = null,
+        ?string $contentType = null,
+        string $charset = self::DEFAULT_CHARSET
+    ) {
         Validate::that()
             ->isUrl('url', $url)
             ->now();
 
-        $this->url  = $url;
-        $this->name = $name ?: urldecode(basename(parse_url($url, PHP_URL_PATH)));
+        $this->url         = $url;
+        $this->name        = $name ?: urldecode(basename(parse_url($url, PHP_URL_PATH)));
+        $this->contentId   = $contentId;
+        $this->contentType = $contentType;
+        $this->charset     = self::DEFAULT_CHARSET;
+    }
+
+    /**
+     * A static constructor for the UrlAttachment constructor.
+     *
+     * @param string      $url
+     * @param null|string $name        If null, the class will determine a name for the attachment based on the URL.
+     * @param null|string $contentId
+     * @param null|string $contentType
+     * @param string      $charset
+     *
+     * @return UrlAttachment
+     */
+    public static function fromUrl(
+        string $url,
+        ?string $name = null,
+        ?string $contentId = null,
+        ?string $contentType = null,
+        string $charset = self::DEFAULT_CHARSET
+    ): UrlAttachment {
+        return new self($url, $name, $contentId, $contentType, $charset);
     }
 
     /**
@@ -72,42 +97,28 @@ class UrlAttachment implements Attachment
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public function getContentType(): string
-    {
-        if ($this->contentType === null) {
-            $headers = get_headers($this->url, 1);
-
-            $this->contentType = $headers['Content-Type'] ?? null;
-
-            if ($this->contentType === null) {
-                throw new RuntimeException('Unable to determine content type of ' . $this->url);
-            }
-
-            // Only use the actual type from the content type. Ignore the character set.
-            $this->contentType = explode(';', $this->contentType)[0];
-        }
-
-        return $this->contentType;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getName(): string
-    {
-        return $this->name;
-    }
-
-    /**
      * @return string
      */
     public function __toString(): string
     {
         return json_encode([
-            'url'  => $this->url,
-            'name' => $this->name,
+            'url'       => $this->url,
+            'name'      => $this->name,
+            'contentId' => $this->contentId,
         ]);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function determineContentType(): string
+    {
+        $contentType = get_headers($this->url, 1)['Content-Type'] ?? null;
+
+        if (!$contentType) {
+            return 'application/octet-stream';
+        } else {
+            return explode(';', $contentType)[0];
+        }
     }
 }

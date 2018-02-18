@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace PhpEmail\Content;
 
 use PhpEmail\Content;
+use PhpEmail\Content\SimpleContent\Message;
 
 /**
  * The standard content of an email, as we have always used it. All that is required is some HTML or a text string.
@@ -12,22 +13,22 @@ use PhpEmail\Content;
 class SimpleContent implements Content\Contracts\SimpleContent
 {
     /**
-     * @var string|null
+     * @var Message|null
      */
     private $html;
 
     /**
-     * @var string|null
+     * @var Message|null
      */
     private $text;
 
     /**
      * SimpleContent constructor.
      *
-     * @param string|null $html
-     * @param string|null $text
+     * @param Message|null $html
+     * @param Message|null $text
      */
-    public function __construct(?string $html, ?string $text)
+    public function __construct(?Message $html, ?Message $text)
     {
         $this->html = $html;
         $this->text = $text;
@@ -35,36 +36,60 @@ class SimpleContent implements Content\Contracts\SimpleContent
 
     /**
      * @param string $html
+     * @param string $charset
      *
      * @return SimpleContent
      */
-    public static function html(?string $html): self
+    public static function html(string $html, string $charset = Message::DEFAULT_CHARSET): self
     {
-        return new self($html, null);
+        return new self(new Message($html, $charset), null);
+    }
+
+    /**
+     * @param string $html
+     * @param string $charset
+     *
+     * @return SimpleContent
+     */
+    public function addHtml(string $html, string $charset = Message::DEFAULT_CHARSET): self
+    {
+        return new self(new Message($html, $charset), clone $this->text);
     }
 
     /**
      * @param string $text
+     * @param string $charset
      *
      * @return SimpleContent
      */
-    public static function text(?string $text): self
+    public static function text(string $text, string $charset = Message::DEFAULT_CHARSET): self
     {
-        return new self(null, $text);
+        return new self(null, new Message($text, $charset));
     }
 
     /**
-     * @return string|null
+     * @param string $text
+     * @param string $charset
+     *
+     * @return SimpleContent
      */
-    public function getHtml(): ?string
+    public function addText(string $text, string $charset = Message::DEFAULT_CHARSET): self
+    {
+        return new self(clone $this->html, new Message($text, $charset));
+    }
+
+    /**
+     * @return Message|null
+     */
+    public function getHtml(): ?Message
     {
         return $this->html;
     }
 
     /**
-     * @return string|null
+     * @return Message|null
      */
-    public function getText(): ?string
+    public function getText(): ?Message
     {
         return $this->text;
     }

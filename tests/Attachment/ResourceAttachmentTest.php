@@ -9,6 +9,7 @@ use PhpEmail\Test\TestCase;
 
 /**
  * @covers \PhpEmail\Attachment\ResourceAttachment
+ * @covers \PhpEmail\Attachment\AttachmentWithHeaders
  */
 class ResourceAttachmentTest extends TestCase
 {
@@ -58,12 +59,40 @@ class ResourceAttachmentTest extends TestCase
         $attachment = new ResourceAttachment($this->resource);
 
         self::assertEquals('text/plain', $attachment->getContentType());
+        self::assertEquals('utf-8', $attachment->getCharset());
+        self::assertEquals(null, $attachment->getContentId());
         self::assertEquals('QXR0YWNobWVudCBmaWxl', $attachment->getBase64Content());
         self::assertEquals('Attachment file', $attachment->getContent());
         self::assertEquals('attachment test.txt', $attachment->getName());
         self::assertEquals($this->resource, $attachment->getResource());
         self::assertEquals(
-            '{"uri":"\/tmp\/attachment test.txt","name":"attachment test.txt"}',
+            '{"uri":"\/tmp\/attachment test.txt","name":"attachment test.txt","contentId":null}',
+            $attachment->__toString()
+        );
+    }
+
+    /**
+     * @testdox It should create an attachment using a file on disk and set headers
+     */
+    public function handlesLocalFileWithHeaders()
+    {
+        $this->resource = fopen(self::$file, 'r');
+
+        $attachment = ResourceAttachment::fromResource($this->resource)
+            ->setContentType('text/json')
+            ->setContentId('testid')
+            ->setName('testfile.txt')
+            ->setCharset('utf-16');
+
+        self::assertEquals('text/json', $attachment->getContentType());
+        self::assertEquals('utf-16', $attachment->getCharset());
+        self::assertEquals('testid', $attachment->getContentId());
+        self::assertEquals('QXR0YWNobWVudCBmaWxl', $attachment->getBase64Content());
+        self::assertEquals('Attachment file', $attachment->getContent());
+        self::assertEquals('testfile.txt', $attachment->getName());
+        self::assertEquals($this->resource, $attachment->getResource());
+        self::assertEquals(
+            '{"uri":"\/tmp\/attachment test.txt","name":"testfile.txt","contentId":"testid"}',
             $attachment->__toString()
         );
     }
@@ -79,12 +108,14 @@ class ResourceAttachmentTest extends TestCase
         $attachment = new ResourceAttachment($this->resource);
 
         self::assertEquals('text/plain', $attachment->getContentType());
+        self::assertEquals('utf-8', $attachment->getCharset());
+        self::assertEquals(null, $attachment->getContentId());
         self::assertEquals('QXR0YWNobWVudCBmaWxl', $attachment->getBase64Content());
         self::assertEquals('Attachment file', $attachment->getContent());
         self::assertEquals('attachment test.txt', $attachment->getName());
         self::assertEquals($this->resource, $attachment->getResource());
         self::assertEquals(
-            '{"uri":"http:\/\/localhost:8777\/attachment%20test.txt?withquery=1","name":"attachment test.txt"}',
+            '{"uri":"http:\/\/localhost:8777\/attachment%20test.txt?withquery=1","name":"attachment test.txt","contentId":null}',
             $attachment->__toString()
         );
     }

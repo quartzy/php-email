@@ -5,16 +5,17 @@ declare(strict_types=1);
 namespace PhpEmail\Content\Contracts;
 
 use PhpEmail\Content;
+use PhpEmail\Content\SimpleContent\Message;
 
 interface SimpleContent extends Content
 {
     /**
-     * @return string|null
+     * @return Message|null
      */
-    public function getHtml(): ?string;
+    public function getHtml(): ?Message;
 
     /**
-     * @return string|null
+     * @return Message|null
      */
-    public function getText(): ?string;
+    public function getText(): ?Message;
 }

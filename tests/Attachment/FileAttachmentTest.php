@@ -9,6 +9,7 @@ use PhpEmail\Test\TestCase;
 
 /**
  * @covers \PhpEmail\Attachment\FileAttachment
+ * @covers \PhpEmail\Attachment\AttachmentWithHeaders
  */
 class FileAttachmentTest extends TestCase
 {
@@ -39,12 +40,38 @@ class FileAttachmentTest extends TestCase
         $attachment = new FileAttachment(self::$file);
 
         self::assertEquals('text/plain', $attachment->getContentType());
+        self::assertEquals('utf-8', $attachment->getCharset());
+        self::assertEquals(null, $attachment->getContentId());
         self::assertEquals('QXR0YWNobWVudCBmaWxl', $attachment->getBase64Content());
         self::assertEquals('Attachment file', $attachment->getContent());
         self::assertEquals('attachment_test.txt', $attachment->getName());
         self::assertEquals('/tmp/attachment_test.txt', $attachment->getFile());
         self::assertEquals(
-            '{"file":"\/tmp\/attachment_test.txt","name":"attachment_test.txt"}',
+            '{"file":"\/tmp\/attachment_test.txt","name":"attachment_test.txt","contentId":null}',
+            $attachment->__toString()
+        );
+    }
+
+    /**
+     * @testdox It should create an attachment using a file on the disk and set its headers.
+     */
+    public function handlesLocalFileWithHeaders()
+    {
+        $attachment = FileAttachment::fromFile(self::$file)
+            ->setContentType('text/json')
+            ->setContentId('testid')
+            ->setName('testfile.txt')
+            ->setCharset('utf-16');
+
+        self::assertEquals('text/json', $attachment->getContentType());
+        self::assertEquals('utf-16', $attachment->getCharset());
+        self::assertEquals('testid', $attachment->getContentId());
+        self::assertEquals('QXR0YWNobWVudCBmaWxl', $attachment->getBase64Content());
+        self::assertEquals('Attachment file', $attachment->getContent());
+        self::assertEquals('testfile.txt', $attachment->getName());
+        self::assertEquals('/tmp/attachment_test.txt', $attachment->getFile());
+        self::assertEquals(
+            '{"file":"\/tmp\/attachment_test.txt","name":"testfile.txt","contentId":"testid"}',
             $attachment->__toString()
         );
     }
