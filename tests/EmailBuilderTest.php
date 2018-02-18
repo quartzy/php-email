@@ -38,7 +38,7 @@ class EmailBuilderTest extends TestCase
     /**
      * @testdox It should build an email
      */
-    public function buildsAnEmail()
+    public function testBuildsAnEmail()
     {
         $email = EmailBuilder::email()
             ->to('recipient.one@test.com', 'Recipient One')

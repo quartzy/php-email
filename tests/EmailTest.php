@@ -10,6 +10,7 @@ use PhpEmail\Content\EmptyContent;
 use PhpEmail\Content\SimpleContent;
 use PhpEmail\Email;
 use PhpEmail\Header;
+use PhpEmail\ValidationException;
 
 /**
  * @covers \PhpEmail\Email
@@ -37,17 +38,18 @@ class EmailTest extends TestCase
 
     /**
      * @testdox It should validate on construction
-     * @expectedException \PhpEmail\ValidationException
      */
-    public function validatesOnConstruction()
+    public function testValidatesOnConstruction()
     {
+        self::expectException(ValidationException::class);
+
         new Email('', SimpleContent::text('hello'), new Address('sender@test.com'), ['hello']);
     }
 
     /**
      * @testdox It should allow for adding details to a build email
      */
-    public function addsDetails()
+    public function testAddsDetails()
     {
         $email = new Email('Subject', SimpleContent::text('hello'), new Address('sender@test.com'), [new Address('receive@test.com')]);
 

@@ -54,7 +54,7 @@ class UrlAttachmentTest extends TestCase
     /**
      * @testdox It should create an attachment using a URL
      */
-    public function handlesRemoteFileWithDefaults()
+    public function testHandlesRemoteFileWithDefaults()
     {
         $attachment = new UrlAttachment('http://localhost:8777/test%20test.txt?withquery=1');
 
@@ -74,7 +74,7 @@ class UrlAttachmentTest extends TestCase
     /**
      * @testdox It should create an attachment using a URL and define headers
      */
-    public function handlesRemoteFileWithHeaders()
+    public function testHandlesRemoteFileWithHeaders()
     {
         $attachment = UrlAttachment::fromUrl('http://localhost:8777/test%20test.txt?withquery=1')
             ->setContentType('text/json')

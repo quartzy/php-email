@@ -44,6 +44,17 @@ class FileAttachment extends AttachmentWithHeaders
         $this->contentType = $contentType;
     }
 
+    /**
+     * A static alias for the FileAttachment constructor.
+     *
+     * @param string      $file
+     * @param null|string $name        If null, the class will determine a name for the attachment based on the file path.
+     * @param null|string $contentId
+     * @param null|string $contentType
+     * @param string      $charset
+     *
+     * @return FileAttachment
+     */
     public static function fromFile(
         string $file,
         ?string $name = null,
@@ -82,6 +93,11 @@ class FileAttachment extends AttachmentWithHeaders
         return base64_encode($this->getContent());
     }
 
+    protected function determineContentType(): string
+    {
+        return mime_content_type($this->file);
+    }
+
     /**
      * @return string
      */
@@ -92,10 +108,5 @@ class FileAttachment extends AttachmentWithHeaders
             'name'      => $this->name,
             'contentId' => $this->contentId,
         ]);
-    }
-
-    protected function determineContentType(): string
-    {
-        return mime_content_type($this->file);
     }
 }

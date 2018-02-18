@@ -34,7 +34,7 @@ class ValidatorTest extends TestCase
     /**
      * @testdox It should validate that a value is a valid email address
      */
-    public function validatesEmail()
+    public function testValidatesEmail()
     {
         Validate::that()
             ->isEmail('email', 'email@test.com')
@@ -53,11 +53,12 @@ class ValidatorTest extends TestCase
 
     /**
      * @testdox It should throw an error if the value is not a valid email
-     * @expectedException \PhpEmail\ValidationException
      * @dataProvider nonEmails
      */
-    public function invalidatesNonEmail($value)
+    public function testInvalidatesNonEmail($value)
     {
+        self::expectException(ValidationException::class);
+
         Validate::that()
             ->isEmail('email', $value)
             ->now();
@@ -66,7 +67,7 @@ class ValidatorTest extends TestCase
     /**
      * @testdox It should validate that all items in a list are of a specified type
      */
-    public function validatesAllInstanceOf()
+    public function testValidatesAllInstanceOf()
     {
         Validate::that()
             ->allInstanceOf('instances', [new Address('email@test.com')], Address::class)
@@ -77,10 +78,11 @@ class ValidatorTest extends TestCase
 
     /**
      * @testdox It should throw an error if one of the values is not an instance
-     * @expectedException \PhpEmail\ValidationException
      */
-    public function invalidatesNonInstance()
+    public function testInvalidatesNonInstance()
     {
+        self::expectException(ValidationException::class);
+
         Validate::that()
             ->allInstanceOf('instances', [new Address('email@test.com')], Content::class)
             ->now();
@@ -89,7 +91,7 @@ class ValidatorTest extends TestCase
     /**
      * @testdox It should validate that a value has a minimum given length
      */
-    public function validatesMinimumLength()
+    public function testValidatesMinimumLength()
     {
         Validate::that()
             ->hasMinLength('len', 'blah', 4)
@@ -100,10 +102,11 @@ class ValidatorTest extends TestCase
 
     /**
      * @testdox It should throw an error if the length is too short
-     * @expectedException \PhpEmail\ValidationException
      */
-    public function invalidatesLengthTooShort()
+    public function testInvalidatesLengthTooShort()
     {
+        self::expectException(ValidationException::class);
+
         Validate::that()
             ->hasMinLength('len', 'Blah', 5)
             ->now();
@@ -112,7 +115,7 @@ class ValidatorTest extends TestCase
     /**
      * @testdox It should validate that a given path is a file
      */
-    public function validatesFile()
+    public function testValidatesFile()
     {
         Validate::that()
             ->isFile('file', self::TEST_FILE)
@@ -123,10 +126,11 @@ class ValidatorTest extends TestCase
 
     /**
      * @testdox It should throw an error if the file does not exist
-     * @expectedException \PhpEmail\ValidationException
      */
-    public function invalidatesNonExistingFile()
+    public function testInvalidatesNonExistingFile()
     {
+        self::expectException(ValidationException::class);
+
         Validate::that()
             ->isFile('file', 'blah.txt')
             ->now();
@@ -135,7 +139,7 @@ class ValidatorTest extends TestCase
     /**
      * @testdox It should validate that a resource is a stream
      */
-    public function validatesStreams()
+    public function testValidatesStreams()
     {
         $fh = fopen(self::TEST_FILE, 'r');
 
@@ -148,10 +152,11 @@ class ValidatorTest extends TestCase
 
     /**
      * @testdox It should throw an error if the resource is not a stream
-     * @expectedException \PhpEmail\ValidationException
      */
-    public function invalidatesNonStream()
+    public function testInvalidatesNonStream()
     {
+        self::expectException(ValidationException::class);
+
         $xml = xml_parser_create();
 
         Validate::that()
@@ -162,7 +167,7 @@ class ValidatorTest extends TestCase
     /**
      * @testdox It should validate an full URL
      */
-    public function validatesUrl()
+    public function testValidatesUrl()
     {
         Validate::that()
             ->isUrl('url', 'http://test.com/test.jpg')
@@ -174,7 +179,7 @@ class ValidatorTest extends TestCase
     /**
      * @testdox It should invalidate a partial URL
      */
-    public function invalidatesPartialUrl()
+    public function testInvalidatesPartialUrl()
     {
         self::expectException(ValidationException::class);
 
@@ -185,10 +190,11 @@ class ValidatorTest extends TestCase
 
     /**
      * @testdox It should validate a single property multiple times
-     * @expectedException \PhpEmail\ValidationException
      */
-    public function validatesPropertyMultipleTimes()
+    public function testValidatesPropertyMultipleTimes()
     {
+        self::expectException(ValidationException::class);
+
         Validate::that()
             ->isEmail('str', 1234)
             ->hasMinLength('str', 1234, 5)

@@ -44,6 +44,17 @@ class ResourceAttachment extends AttachmentWithHeaders
         $this->charset     = $charset;
     }
 
+    /**
+     * A static alias for the ResourceAttachment constructor.
+     *
+     * @param             $resource
+     * @param null|string $name        If null, the class will determine a name for the attachment based on the resource.
+     * @param null|string $contentId
+     * @param null|string $contentType
+     * @param string      $charset
+     *
+     * @return ResourceAttachment
+     */
     public static function fromResource(
         $resource,
         ?string $name = null,
