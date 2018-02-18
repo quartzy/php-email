@@ -1,11 +1,12 @@
 # Php-Email
 
 [![Latest Version on Packagist][ico-version]][link-packagist]
+[![Total Downloads][ico-downloads]][link-downloads]
 [![Software License][ico-license]](LICENSE)
-[![Build Status][ico-circleci]][link-circleci]
+[![Build Status][ico-travisci]][link-travisci]
 [![Coverage Status][ico-codecov]][link-codecov]
 [![Style Status][ico-styleci]][link-styleci]
-[![Total Downloads][ico-downloads]][link-downloads]
+[![Scrutinizer Code Quality][ico-scrutinizer]][link-scrutinizer]
 
 This is a domain-driven library for defining emails in PHP.
 
@@ -86,14 +87,16 @@ The Apache License, v2.0. Please see [License File](LICENSE) for more informatio
 
 [ico-version]: https://img.shields.io/packagist/v/quartzy/php-email.svg?style=flat-square
 [ico-license]: https://img.shields.io/badge/license-Apache%202.0-brightgreen.svg?style=flat-square
-[ico-circleci]: https://img.shields.io/circleci/project/github/quartzy/php-email/master.svg?style=flat-square
-[ico-codecov]: https://img.shields.io/codecov/c/github/quartzy/php-email.svg?style=flat-square
+[ico-travisci]: https://img.shields.io/travis/quartzy/php-email.svg?style=flat-square
+[ico-codecov]: https://img.shields.io/scrutinizer/coverage/g/quartzy/php-email.svg?style=flat-square
 [ico-styleci]: https://styleci.io/repos/81520386/shield
+[ico-scrutinizer]: https://img.shields.io/scrutinizer/g/quartzy/php-email.svg?style=flat-square
 [ico-downloads]: https://img.shields.io/packagist/dt/quartzy/php-email.svg?style=flat-square
 
 [link-packagist]: https://packagist.org/packages/quartzy/php-email
-[link-circleci]: https://circleci.com/gh/quartzy/php-email/tree/master
-[link-codecov]: http://codecov.io/github/quartzy/php-email?branch=master
+[link-travisci]: https://travis-ci.org/quartzy/php-email
+[link-codecov]: https://scrutinizer-ci.com/g/quartzy/php-email
 [link-styleci]: https://styleci.io/repos/81520386
+[link-scrutinizer]: https://scrutinizer-ci.com/g/quartzy/php-email
 [link-downloads]: https://packagist.org/packages/quartzy/php-email
 [link-contributors]: ../../contributors
