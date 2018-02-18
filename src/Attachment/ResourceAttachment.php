@@ -130,18 +130,14 @@ class ResourceAttachment extends AttachmentWithHeaders
             case 'plainfile':
                 return mime_content_type($uri);
 
-                break;
-
             case 'http':
                 $contentType = get_headers($uri, 1)['Content-Type'] ?? null;
 
                 if (!$contentType) {
                     return 'application/octet-stream';
-                } else {
-                    return explode(';', $contentType)[0];
                 }
 
-                break;
+                return explode(';', $contentType)[0];
 
             default:
                 return 'application/octet-stream';

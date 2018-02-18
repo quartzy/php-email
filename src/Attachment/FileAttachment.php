@@ -78,7 +78,7 @@ class FileAttachment extends AttachmentWithHeaders
      */
     public function getContent(): string
     {
-        if (!$this->content) {
+        if ($this->content === null) {
             $this->content = file_get_contents($this->file);
         }
 

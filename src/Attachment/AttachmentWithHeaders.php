@@ -44,7 +44,7 @@ abstract class AttachmentWithHeaders implements Attachment
      */
     public function getContentType(): string
     {
-        if (!$this->contentType) {
+        if ($this->contentType === null) {
             $this->contentType = $this->determineContentType();
         }
 

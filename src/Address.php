@@ -57,7 +57,7 @@ class Address
      */
     public function toRfc2822(): string
     {
-        if ($this->getName()) {
+        if ($this->getName() !== null) {
             return sprintf('"%s" <%s>', $this->getName(), $this->getEmail());
         }
 
@@ -81,7 +81,7 @@ class Address
         $name = null;
 
         // If there are more parts to the address string, combine them to use as the name
-        if ($parts) {
+        if (!empty($parts)) {
             // Trim any extraneous quotes from the name
             $name = trim(implode(' ', $parts), '"');
         }

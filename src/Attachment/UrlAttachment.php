@@ -44,7 +44,7 @@ class UrlAttachment extends AttachmentWithHeaders
         $this->name        = $name ?: urldecode(basename(parse_url($url, PHP_URL_PATH)));
         $this->contentId   = $contentId;
         $this->contentType = $contentType;
-        $this->charset     = self::DEFAULT_CHARSET;
+        $this->charset     = $charset;
     }
 
     /**
