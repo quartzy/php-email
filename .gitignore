@@ -4,5 +4,4 @@
 /.composer
 
 reports
-coverage.xml
-junit.xml
+coverage.clover
