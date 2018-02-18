@@ -60,6 +60,7 @@ class EmailTest extends TestCase
         $replyTo        = new Address('reply.to@test.com');
         $content        = new EmptyContent();
         $attachment     = new FileAttachment(self::$file);
+        $embedded       = new FileAttachment(self::$file);
         $header         = new Header('X-Test', 'test');
 
         $email
@@ -71,6 +72,7 @@ class EmailTest extends TestCase
             ->setSubject('Updated Subject')
             ->setContent($content)
             ->addAttachments($attachment)
+            ->addEmbedded($embedded)
             ->addHeaders($header);
 
         self::assertContains($secondReceiver, $email->getToRecipients());
@@ -80,6 +82,7 @@ class EmailTest extends TestCase
         self::assertContains($replyTo, $email->getReplyTos());
         self::assertSame($content, $email->getContent());
         self::assertContains($attachment, $email->getAttachments());
+        self::assertContains($embedded, $email->getEmbedded());
         self::assertEquals([$header], $email->getHeaders());
     }
 }

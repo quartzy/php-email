@@ -15,6 +15,11 @@ class FileAttachment extends AttachmentWithHeaders
     private $file;
 
     /**
+     * @var string|null
+     */
+    private $content;
+
+    /**
      * @param string      $file
      * @param null|string $name        If null, the class will determine a name for the attachment based on the file path.
      * @param null|string $contentId
@@ -73,7 +78,11 @@ class FileAttachment extends AttachmentWithHeaders
      */
     public function getContent(): string
     {
-        return file_get_contents($this->file);
+        if (!$this->content) {
+            $this->content = file_get_contents($this->file);
+        }
+
+        return $this->content;
     }
 
     /**
