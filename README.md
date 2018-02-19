@@ -31,6 +31,7 @@ Building an email with HTML and text content would look like:
 ```php
 <?php
 
+use PhpEmail\Attachment\FileAttachment;
 use PhpEmail\EmailBuilder;
 use PhpEmail\Content\SimpleContent;
 
@@ -42,7 +43,7 @@ $email = EmailBuilder::email()
     ->cc('cc@test.com')
     ->bcc('bcc@test.com')
     ->replyTo('reply.to@test.com')
-    ->attach('/path/to/my/file.txt')
+    ->attach(new FileAttachment('/path/to/my/file.txt'))
     ->build();
 ```
 
