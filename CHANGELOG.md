@@ -1,5 +1,24 @@
 # Change Log
 
+All notable changes to this project will be documented in this file.
+
+The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
+and this project attempts to follow [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
+
+## 0.5.0 - 2018-02-25
+
+### Added
+
+* Support for custom headers on emails.
+* Add character set header to text and HTML content.
+* Add common headers to attachments: content type, character set, name, content ID.
+* Add embedded (inline) attachments to emails.
+* Added fluent `addText` and `addHtml` methods on `SimpleContent`
+
+### Change
+
+* Now using `Message` objects instead of string for `SimpleContent`'s text and HTML properties.
+
 ## 0.4.0 - 2017-12-13
 
 ### Changed
