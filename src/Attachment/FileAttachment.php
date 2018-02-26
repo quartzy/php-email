@@ -24,14 +24,14 @@ class FileAttachment extends AttachmentWithHeaders
      * @param null|string $name        If null, the class will determine a name for the attachment based on the file path.
      * @param null|string $contentId
      * @param null|string $contentType
-     * @param string      $charset
+     * @param null|string $charset
      */
     public function __construct(
         string $file,
         ?string $name = null,
         ?string $contentId = null,
         ?string $contentType = null,
-        string $charset = self::DEFAULT_CHARSET
+        string $charset = null
     ) {
         Validate::that()
             ->isFile('file', $file)
@@ -51,7 +51,7 @@ class FileAttachment extends AttachmentWithHeaders
      * @param null|string $name        If null, the class will determine a name for the attachment based on the file path.
      * @param null|string $contentId
      * @param null|string $contentType
-     * @param string      $charset
+     * @param null|string $charset
      *
      * @return FileAttachment
      */
@@ -60,7 +60,7 @@ class FileAttachment extends AttachmentWithHeaders
         ?string $name = null,
         ?string $contentId = null,
         ?string $contentType = null,
-        string $charset = self::DEFAULT_CHARSET
+        string $charset = null
     ): FileAttachment {
         return new self($file, $name, $contentId, $contentType, $charset);
     }

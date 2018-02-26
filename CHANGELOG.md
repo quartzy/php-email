@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project attempts to follow [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## Unreleased Changes
+
+### Added
+
+* Created helper function on `Attachment` to get the RFC content type header.
+
+### Changed
+
+* Allowed null charset on attachments and changed the default to null.
+
 ## 0.5.0 - 2018-02-25
 
 ### Added
@@ -15,7 +25,7 @@ and this project attempts to follow [Semantic Versioning](http://semver.org/spec
 * Add embedded (inline) attachments to emails.
 * Added fluent `addText` and `addHtml` methods on `SimpleContent`
 
-### Change
+### Changed
 
 * Now using `Message` objects instead of string for `SimpleContent`'s text and HTML properties.
 

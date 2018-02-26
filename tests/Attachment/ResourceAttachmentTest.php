@@ -58,13 +58,15 @@ class ResourceAttachmentTest extends TestCase
 
         $attachment = new ResourceAttachment($this->resource);
 
+
         self::assertEquals('text/plain', $attachment->getContentType());
-        self::assertEquals('utf-8', $attachment->getCharset());
+        self::assertEquals(null, $attachment->getCharset());
         self::assertEquals(null, $attachment->getContentId());
         self::assertEquals('QXR0YWNobWVudCBmaWxl', $attachment->getBase64Content());
         self::assertEquals('Attachment file', $attachment->getContent());
         self::assertEquals('attachment test.txt', $attachment->getName());
         self::assertEquals($this->resource, $attachment->getResource());
+        self::assertEquals('text/plain; name="attachment test.txt"', $attachment->getRfc2822ContentType());
         self::assertEquals(
             '{"uri":"\/tmp\/attachment test.txt","name":"attachment test.txt","contentId":null}',
             $attachment->__toString()
@@ -91,6 +93,7 @@ class ResourceAttachmentTest extends TestCase
         self::assertEquals('Attachment file', $attachment->getContent());
         self::assertEquals('testfile.txt', $attachment->getName());
         self::assertEquals($this->resource, $attachment->getResource());
+        self::assertEquals('text/json; name="testfile.txt"; charset="utf-16"', $attachment->getRfc2822ContentType());
         self::assertEquals(
             '{"uri":"\/tmp\/attachment test.txt","name":"testfile.txt","contentId":"testid"}',
             $attachment->__toString()
@@ -108,7 +111,7 @@ class ResourceAttachmentTest extends TestCase
         $attachment = new ResourceAttachment($this->resource);
 
         self::assertEquals('text/plain', $attachment->getContentType());
-        self::assertEquals('utf-8', $attachment->getCharset());
+        self::assertEquals(null, $attachment->getCharset());
         self::assertEquals(null, $attachment->getContentId());
         self::assertEquals('QXR0YWNobWVudCBmaWxl', $attachment->getBase64Content());
         self::assertEquals('Attachment file', $attachment->getContent());

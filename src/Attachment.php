@@ -40,9 +40,9 @@ interface Attachment
     /**
      * Get the character set defined on the attachment.
      *
-     * @return string
+     * @return string|null
      */
-    public function getCharset(): string;
+    public function getCharset(): ?string;
 
     /**
      * Set the character set for the attachment.
@@ -84,6 +84,15 @@ interface Attachment
      * @return Attachment
      */
     public function setName(string $name): Attachment;
+
+    /**
+     * Get a common representation of the RFC 822 formatted Content Type headers, including:
+     *  - content type
+     *  - name
+     *  - character set
+     * @return string
+     */
+    public function getRfc2822ContentType(): string;
 
     /**
      * Must be implemented to support comparison.

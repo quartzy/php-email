@@ -27,14 +27,14 @@ class UrlAttachment extends AttachmentWithHeaders
      * @param null|string $name        If null, the class will determine a name for the attachment based on the URL.
      * @param null|string $contentId
      * @param null|string $contentType
-     * @param string      $charset
+     * @param null|string $charset
      */
     public function __construct(
         string $url,
         ?string $name = null,
         ?string $contentId = null,
         ?string $contentType = null,
-        string $charset = self::DEFAULT_CHARSET
+        string $charset = null
     ) {
         Validate::that()
             ->isUrl('url', $url)
@@ -54,7 +54,7 @@ class UrlAttachment extends AttachmentWithHeaders
      * @param null|string $name        If null, the class will determine a name for the attachment based on the URL.
      * @param null|string $contentId
      * @param null|string $contentType
-     * @param string      $charset
+     * @param null|string $charset
      *
      * @return UrlAttachment
      */
@@ -63,7 +63,7 @@ class UrlAttachment extends AttachmentWithHeaders
         ?string $name = null,
         ?string $contentId = null,
         ?string $contentType = null,
-        string $charset = self::DEFAULT_CHARSET
+        string $charset = null
     ): UrlAttachment {
         return new self($url, $name, $contentId, $contentType, $charset);
     }

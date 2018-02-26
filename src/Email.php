@@ -365,7 +365,7 @@ class Email
     }
 
     /**
-     * @return array
+     * @return Attachment[]
      */
     public function getEmbedded(): array
     {
