@@ -89,7 +89,8 @@ interface Attachment
      * Get a common representation of the RFC 822 formatted Content Type headers, including:
      *  - content type
      *  - name
-     *  - character set
+     *  - character set.
+     *
      * @return string
      */
     public function getRfc2822ContentType(): string;

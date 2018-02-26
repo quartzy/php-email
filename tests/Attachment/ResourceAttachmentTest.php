@@ -58,7 +58,6 @@ class ResourceAttachmentTest extends TestCase
 
         $attachment = new ResourceAttachment($this->resource);
 
-
         self::assertEquals('text/plain', $attachment->getContentType());
         self::assertEquals(null, $attachment->getCharset());
         self::assertEquals(null, $attachment->getContentId());
