@@ -40,12 +40,13 @@ class FileAttachmentTest extends TestCase
         $attachment = new FileAttachment(self::$file);
 
         self::assertEquals('text/plain', $attachment->getContentType());
-        self::assertEquals('utf-8', $attachment->getCharset());
+        self::assertEquals(null, $attachment->getCharset());
         self::assertEquals(null, $attachment->getContentId());
         self::assertEquals('QXR0YWNobWVudCBmaWxl', $attachment->getBase64Content());
         self::assertEquals('Attachment file', $attachment->getContent());
         self::assertEquals('attachment_test.txt', $attachment->getName());
         self::assertEquals('/tmp/attachment_test.txt', $attachment->getFile());
+        self::assertEquals('text/plain; name="attachment_test.txt"', $attachment->getRfc2822ContentType());
         self::assertEquals(
             '{"file":"\/tmp\/attachment_test.txt","name":"attachment_test.txt","contentId":null}',
             $attachment->__toString()
@@ -55,7 +56,7 @@ class FileAttachmentTest extends TestCase
     /**
      * @testdox It should create an attachment using a file on the disk and set its headers.
      */
-    public function handlesLocalFileWithHeaders()
+    public function testHandlesLocalFileWithHeaders()
     {
         $attachment = FileAttachment::fromFile(self::$file)
             ->setContentType('text/json')
@@ -70,6 +71,7 @@ class FileAttachmentTest extends TestCase
         self::assertEquals('Attachment file', $attachment->getContent());
         self::assertEquals('testfile.txt', $attachment->getName());
         self::assertEquals('/tmp/attachment_test.txt', $attachment->getFile());
+        self::assertEquals('text/json; name="testfile.txt"; charset="utf-16"', $attachment->getRfc2822ContentType());
         self::assertEquals(
             '{"file":"\/tmp\/attachment_test.txt","name":"testfile.txt","contentId":"testid"}',
             $attachment->__toString()

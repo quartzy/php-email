@@ -8,15 +8,13 @@ use PhpEmail\Attachment;
 
 abstract class AttachmentWithHeaders implements Attachment
 {
-    public const DEFAULT_CHARSET = 'utf-8';
-
     /**
      * @var string|null
      */
     protected $contentType;
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $charset;
 
@@ -64,7 +62,7 @@ abstract class AttachmentWithHeaders implements Attachment
     /**
      * {@inheritdoc}
      */
-    public function getCharset(): string
+    public function getCharset(): ?string
     {
         return $this->charset;
     }
@@ -113,5 +111,22 @@ abstract class AttachmentWithHeaders implements Attachment
         $this->name = $name;
 
         return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getRfc2822ContentType(): string
+    {
+        $parts = [
+            $this->getContentType(),
+            sprintf('name="%s"', $this->getName()),
+        ];
+
+        if ($this->getCharset() !== null) {
+            $parts[] = sprintf('charset="%s"', $this->getCharset());
+        }
+
+        return implode('; ', $parts);
     }
 }

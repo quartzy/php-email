@@ -24,14 +24,14 @@ class ResourceAttachment extends AttachmentWithHeaders
      * @param null|string $name        If null, the class will determine a name for the attachment based on the resource.
      * @param null|string $contentId
      * @param null|string $contentType
-     * @param string      $charset
+     * @param null|string $charset
      */
     public function __construct(
         $resource,
         ?string $name = null,
         ?string $contentId = null,
         ?string $contentType = null,
-        string $charset = self::DEFAULT_CHARSET
+        string $charset = null
     ) {
         Validate::that()
             ->isStream('resource', $resource)
@@ -51,7 +51,7 @@ class ResourceAttachment extends AttachmentWithHeaders
      * @param null|string $name        If null, the class will determine a name for the attachment based on the resource.
      * @param null|string $contentId
      * @param null|string $contentType
-     * @param string      $charset
+     * @param null|string $charset
      *
      * @return ResourceAttachment
      */
@@ -60,7 +60,7 @@ class ResourceAttachment extends AttachmentWithHeaders
         ?string $name = null,
         ?string $contentId = null,
         ?string $contentType = null,
-        string $charset = self::DEFAULT_CHARSET
+        string $charset = null
     ): ResourceAttachment {
         return new self($resource, $name, $contentId, $contentType, $charset);
     }
