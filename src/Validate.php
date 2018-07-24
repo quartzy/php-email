@@ -39,6 +39,25 @@ class Validate
     }
 
     /**
+     * A flexible validation supporting a Closure rule.
+     *
+     * @param         $property
+     * @param         $value
+     * @param Closure $validation
+     * @param         $message
+     *
+     * @return $this
+     */
+    public function using($property, $value, Closure $validation, $message)
+    {
+        $this->is($property, function () use ($value, $validation) {
+            return $validation($value);
+        }, $message);
+
+        return $this;
+    }
+
+    /**
      * @param string $property
      * @param mixed  $value
      *

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace PhpEmail;
 
+use PhpEmail\Content\Contracts\TemplatedContent;
+
 class Email
 {
     /**
@@ -32,7 +34,7 @@ class Email
     private $replyTos = [];
 
     /**
-     * @var string
+     * @var string|null
      */
     private $subject;
 
@@ -65,14 +67,16 @@ class Email
      * @throws ValidationException
      */
     public function __construct(
-        string $subject,
+        ?string $subject,
         Content $content,
         Address $from,
         array $toRecipients
     ) {
         Validate::that()
             ->allInstanceOf('toRecipients', $toRecipients, Address::class)
-            ->hasMinLength('subject', $subject, 1)
+            ->using('subject', $subject, function (?string $subject) use ($content) {
+                return $content instanceof TemplatedContent || strlen($subject) >= 1;
+            }, 'Subject must have a length of at least 1 for non-templated emails')
             ->now();
 
         $this->content = $content;
@@ -231,9 +235,9 @@ class Email
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getSubject(): string
+    public function getSubject(): ?string
     {
         return $this->subject;
     }
