@@ -8,6 +8,7 @@ use PhpEmail\Address;
 use PhpEmail\Attachment\FileAttachment;
 use PhpEmail\Content\EmptyContent;
 use PhpEmail\Content\SimpleContent;
+use PhpEmail\Content\TemplatedContent;
 use PhpEmail\Email;
 use PhpEmail\Header;
 use PhpEmail\ValidationException;
@@ -43,7 +44,18 @@ class EmailTest extends TestCase
     {
         self::expectException(ValidationException::class);
 
-        new Email('', SimpleContent::text('hello'), new Address('sender@test.com'), ['hello']);
+        new Email('', SimpleContent::text('hello'), new Address('sender@test.com'), ['recipient@test.com']);
+    }
+
+    public function testAllowsEmptySubjectWithTemplates()
+    {
+        $emptySubject = new Email('', new TemplatedContent('test', []), new Address('sender@test.com'), [new Address('recipient@test.com')]);
+
+        self::assertEmpty($emptySubject->getSubject());
+
+        $nullSubject = new Email(null, new TemplatedContent('test', []), new Address('sender@test.com'), [new Address('recipient@test.com')]);
+
+        self::assertNull($nullSubject->getSubject());
     }
 
     /**
