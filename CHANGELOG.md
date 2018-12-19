@@ -7,6 +7,8 @@ and this project attempts to follow [Semantic Versioning](http://semver.org/spec
 
 ## Unreleased
 
+## 0.6.0 - 2018-12-19
+
 ### Changed
 
 * 	Allow subject to be empty/null on templated emails ([#22](https://github.com/quartzy/php-email/pull/22))
